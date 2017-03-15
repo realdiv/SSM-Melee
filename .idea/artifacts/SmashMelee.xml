@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="SmashMelee">
+    <output-path>$PROJECT_DIR$/out/artifacts/SmashMelee</output-path>
+    <root id="archive" name="SmashMelee.jar">
+      <element id="module-output" name="SSM-Melee" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/us/davidiv/Smash/plugin.yml" />
+    </root>
+  </artifact>
+</component>

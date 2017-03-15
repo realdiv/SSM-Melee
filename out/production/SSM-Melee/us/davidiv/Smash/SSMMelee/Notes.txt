@@ -1,0 +1,63 @@
+Some random shit dude!
+
+First off, remember that in the future we want an in-game testing mode. This mode would allow you to change all
+game values to whatever the fuck you want(within the int/double limits of course)! Most of the values can be
+changed at a per person level. Some of the more delicate values will be locked (-Locked) to everyone besides Devs.
+
+-Formulas could be edited using books
+
+It's usable in both GUI and command form. To open up the GUI run the command /debugsmash. Once the command has
+been run, you'll receive a Golden Apple at the end of your inventory, when that Golden Apple is right-clicked,
+it'll open up the GUI and you're free to start changing shit.
+
+
+ Some examples of the values you could change are:
+
+      -Kit Things - Has nothing to do with values, but this will allow you to change which abilities are on which class
+                  and which kit you're currently using. Nothing special, but it's a necessity.
+
+      -Stock values - Whether it be what you start off with or how many you have in the game.
+
+      -Damage values - Whether it be ability damage, melee damager or even entity damage!
+
+      -Knockback values - Not to be confused with Knockback Multiplier, this will allow you to change the knockback of
+                          melee, abilities or again, entities.
+
+      -Knockback Multiplier - This will allow you to change the knockback multiplier completely, and that includes the
+                              formula for the multiplier itself (assuming health and knockback are both in this).. be
+                              careful with that. This also allows you to change someone's multiplier at any given
+                              time. This will have to be specially coded though, since it would likely reset if health
+                              were a feature.
+
+                              -Locked
+
+      -Kit Statistics - Self-explanatory, but, for the memes - that includes regen(If it's a feature), armor, knockback
+                        and damage.
+
+      -Vector values - Whether that be your double jump, abilities or even your walking speed
+
+      -Radius values - Mostly applies to abilities, but this will allow you to change the radius of a bunch of shit
+
+      -Cooldowns - Allows you to change cooldowns of abilities, it allows you to set it in any unit of time, whether
+                   that be ticks, seconds, minutes, hours, etc.
+
+      -Rebound Physics - This one isn't gonna be fun.. this will allow you to change the formula for rebound physics.
+                         This one in particular is... Well, messy. I wouldn't recommend fucking with this one.
+
+                         -Locked
+
+      -Void Border - This allows you to change the border area.
+
+
+Nigger Remix (/nremix):
+-Adds some niggers : )
+jessie595
+SoYouWannaBeAGangster_ruha
+nazithespyhitler
+MaxMan4000
+AlexMan3000
+DeCunto_04
+9367880
+Yugimoaner
+VietxxxGhost
+Ultimate Dabber
