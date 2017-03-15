@@ -1,4 +1,4 @@
-package SSMMelee.Game;
+package us.davidiv.Smash.SSMMelee.Game;
 
 //Not sure how this will works in a 3D environment - to be tested!
 

@@ -1,6 +1,4 @@
-package SSMMelee.Game;
-
-//Kit manager for making stats easy
+package us.davidiv.Smash.SSMMelee.Kit.Spider;
 
 /**
  * Created by David on 3/15/2017.

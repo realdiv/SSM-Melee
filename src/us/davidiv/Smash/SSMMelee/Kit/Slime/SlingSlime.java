@@ -1,4 +1,4 @@
-package SSMMelee.Kit.Slime;
+package us.davidiv.Smash.SSMMelee.Kit.Slime;
 
 /*
 Slime is frozen in air and is pulled back into the direction its looking.

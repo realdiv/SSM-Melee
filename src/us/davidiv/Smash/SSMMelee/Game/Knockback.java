@@ -1,4 +1,4 @@
-package SSMMelee.Game;
+package us.davidiv.Smash.SSMMelee.Game;
 
 //Knockback multiplier - take a look at the numbers MP uses, it seems to be pretty balanced
 

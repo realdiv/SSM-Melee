@@ -1,4 +1,4 @@
-package SSMMelee.Kit.Slime;
+package us.davidiv.Smash.SSMMelee.Kit.Slime;
 
 /*
 Slime Rocket rip-off xD!

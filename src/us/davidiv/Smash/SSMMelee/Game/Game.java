@@ -1,4 +1,4 @@
-package SSMMelee.Game;
+package us.davidiv.Smash.SSMMelee.Game;
 
 //Class to handle objective and other good shit
 

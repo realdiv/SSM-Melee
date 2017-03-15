@@ -1,4 +1,4 @@
-package SSMMelee.Game;
+package us.davidiv.Smash.SSMMelee.Game;
 
 //Me attempting to make fucking rebound physics. Fun!
 

@@ -1,4 +1,4 @@
-package SSMMelee.Game;
+package us.davidiv.Smash.SSMMelee.Game;
 
 //Void border than instantly kills you when you cross it - 9001 damage for the memes
 
