@@ -1,18 +1,23 @@
 package us.davidiv.Smash.SSMMelee;
 
-import org.bukkit.plugin.java.JavaPlugin;
-
-import us.davidiv.Smash.SSMMelee.Game.DoubleJump;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import us.davidiv.Smash.SSMMelee.Game.DoubleJump;
+import us.davidiv.Smash.SSMMelee.Game.Knockback;
 
 public class SmashMelee extends JavaPlugin {
 
     private static Plugin plugin; // <-- Where you store an instance of your main class
+    FileConfiguration config = getConfig();
+
     @Override
     public void onEnable() {
         plugin = this;
         new DoubleJump(this);
+        new Knockback(this);
+        config.addDefault("youAreAwesome", true);
+
 
 
     }
