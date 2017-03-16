@@ -27,16 +27,13 @@ public class Knockback implements Listener {
     public void storePlayer(PlayerJoinEvent e) {
         Player p = e.getPlayer();
         String uuid = p.getUniqueId().toString();
-        if(!SmashMelee.getPlugin().getConfig().contains("Players." + uuid)) {
+        if (!SmashMelee.getPlugin().getConfig().contains("Players." + uuid)) {
+            SmashMelee.getPlugin().getConfig().set("Players." + uuid + ".Knockback", 0);
+            SmashMelee.getPlugin().saveConfig();
+        } else {
             SmashMelee.getPlugin().getConfig().set("Players." + uuid + ".Knockback", 0);
             SmashMelee.getPlugin().saveConfig();
         }
-
-        else {
-            SmashMelee.getPlugin().getConfig().set("Players." + uuid + ".Knockback", 0);
-            SmashMelee.getPlugin().saveConfig();
-        }
-
     }
 
     @EventHandler
@@ -79,6 +76,6 @@ public class Knockback implements Listener {
                 SmashMelee.getPlugin().getConfig().set("Players." + uuid + ".Knockback", 0);
                 SmashMelee.getPlugin().saveConfig();
             }
-        }
+    }
 
 }

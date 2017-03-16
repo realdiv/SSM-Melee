@@ -18,7 +18,7 @@ public class Stock implements Listener {
     public void stockCreate(PlayerJoinEvent e) {
         Player p = e.getPlayer();
         String uuid = p.getUniqueId().toString();
-        if(!SmashMelee.getPlugin().getConfig().contains("Players." + uuid)) {
+        if(!SmashMelee.getPlugin().getConfig().contains("Players." + uuid+ ".Stock")) {
             SmashMelee.getPlugin().getConfig().set("Players." + uuid + ".Stock", 0);
             SmashMelee.getPlugin().saveConfig();
         }
@@ -28,19 +28,17 @@ public class Stock implements Listener {
             SmashMelee.getPlugin().saveConfig();
         }
 
-        if (SmashMelee.getPlugin().getConfig().getBoolean("GameActive.", true)) {
-            SmashMelee.getPlugin().getConfig().set("Players." + uuid + ".Stock", 4);
-        }
-
     }
 
+    @EventHandler
     public void onDeath(PlayerDeathEvent e) {
         Player p = e.getEntity();
         String uuid = p.getUniqueId().toString();
-        if (SmashMelee.getPlugin().getConfig().getBoolean("GameActive.", true)) {
+        if (SmashMelee.getPlugin().getConfig().getBoolean("GameActive", true)) {
             int stock = SmashMelee.getPlugin().getConfig().getInt("Players." + uuid + ".Stock");
             SmashMelee.getPlugin().getConfig().set("Players." + uuid + ".Stock", (stock - 1));
-            if (SmashMelee.getPlugin().getConfig().getInt("Players." + uuid + ".Stock") == 1) {
+            SmashMelee.getPlugin().saveConfig();
+            if (SmashMelee.getPlugin().getConfig().getInt("Players." + uuid + ".Stock") == 0) {
                 p.sendRawMessage("Out of stock");
             }
         }
