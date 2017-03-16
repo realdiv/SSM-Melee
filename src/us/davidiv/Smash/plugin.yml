@@ -5,3 +5,5 @@ main: us.davidiv.Smash.SSMMelee.SmashMelee
 commands:
   gamestart:
     description: starts the game
+  gamestop:
+    description: stops the game

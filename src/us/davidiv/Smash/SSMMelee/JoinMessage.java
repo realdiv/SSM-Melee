@@ -30,9 +30,9 @@ public class JoinMessage implements Listener {
             String name = p.getName();
             String msg = e.getMessage();
             if (name.equals("Davidiv")) {
-                e.setMessage(ChatColor.LIGHT_PURPLE.BOLD + "DEV " + ChatColor.GRAY + name + " " + ChatColor.WHITE + msg);
+                e.setMessage(ChatColor.LIGHT_PURPLE + "DEV " + ChatColor.GRAY + name + " " + ChatColor.WHITE + msg);
             } else {
-                e.setMessage(ChatColor.AQUA.BOLD + "RANDY " + ChatColor.GRAY + name + " " + ChatColor.WHITE + msg);
+                e.setMessage(ChatColor.AQUA + "RANDY " + ChatColor.GRAY + name + " " + ChatColor.WHITE + msg);
             }
         }
 

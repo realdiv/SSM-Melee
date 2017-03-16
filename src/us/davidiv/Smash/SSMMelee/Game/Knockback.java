@@ -41,6 +41,8 @@ public class Knockback implements Listener {
 
     @EventHandler
     public void Knockback(EntityDamageByEntityEvent e) {
+        boolean dmgM;
+        dmgM = false;
         Entity p = e.getEntity();
         Entity d = e.getDamager();
         String uuid = p.getUniqueId().toString();
@@ -59,12 +61,17 @@ public class Knockback implements Listener {
             //((Player) p).sendRawMessage("Damage Int is " + dI);
         }
         SmashMelee.getPlugin().saveConfig();
-            if (p instanceof Player) {
-                p.setVelocity(d.getLocation().getDirection().multiply((kb / 100) + 0.5));
-            }
-        }
+        if (p instanceof Player) {
+            p.setVelocity(d.getLocation().getDirection().multiply((kb / 100) + 0.5));
+            dmgM = true;
 
-        @EventHandler
+        }
+        if (dmgM == true){
+            e.setDamage(0);
+        }
+    }
+
+    @EventHandler
         public void KBReset(PlayerDeathEvent e) {
             Player p = e.getEntity();
             if (p instanceof Player) {
