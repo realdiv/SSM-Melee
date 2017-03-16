@@ -2,8 +2,50 @@ package us.davidiv.Smash.SSMMelee.Game;
 
 //Basic stock system, keep the number of stock at 4 until I make an in-game tester
 
-/**
- * Created by David on 3/15/2017.
- */
-public class Stock {
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import us.davidiv.Smash.SSMMelee.SmashMelee;
+
+public class Stock implements Listener {
+    public Stock(SmashMelee plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+    }
+
+    @EventHandler
+    public void stockCreate(PlayerJoinEvent e) {
+        Player p = e.getPlayer();
+        String uuid = p.getUniqueId().toString();
+        if(!SmashMelee.getPlugin().getConfig().contains("Players." + uuid)) {
+            SmashMelee.getPlugin().getConfig().set("Players." + uuid + ".Stock", 0);
+            SmashMelee.getPlugin().saveConfig();
+        }
+
+        else {
+            SmashMelee.getPlugin().getConfig().set("Players." + uuid + ".Stock", 0);
+            SmashMelee.getPlugin().saveConfig();
+        }
+
+        if (SmashMelee.getPlugin().getConfig().getBoolean("GameActive.", true)) {
+            SmashMelee.getPlugin().getConfig().set("Players." + uuid + ".Stock", 4);
+        }
+
+    }
+
+    public void onDeath(PlayerDeathEvent e) {
+        Player p = e.getEntity();
+        String uuid = p.getUniqueId().toString();
+        if (SmashMelee.getPlugin().getConfig().getBoolean("GameActive.", true)) {
+            int stock = SmashMelee.getPlugin().getConfig().getInt("Players." + uuid + ".Stock");
+            SmashMelee.getPlugin().getConfig().set("Players." + uuid + ".Stock", (stock - 1));
+            if (SmashMelee.getPlugin().getConfig().getInt("Players." + uuid + ".Stock") == 1) {
+                p.sendRawMessage("Out of stock");
+            }
+        }
+    }
+
+
+
 }

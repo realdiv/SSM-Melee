@@ -3,3 +3,5 @@ version: 0.0.1.0.4.1
 author: Davidiv
 main: us.davidiv.Smash.SSMMelee.SmashMelee
 commands:
+  gamestart:
+    description: starts the game

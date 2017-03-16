@@ -1,8 +1,8 @@
 package us.davidiv.Smash.SSMMelee.Game;
 
 //Knockback multiplier - take a look at the numbers MP uses, it seems to be pretty balanced
+//TODO CHECK IF GAMEACTIVE = TRUE
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,8 +26,6 @@ public class Knockback implements Listener {
     @EventHandler
     public void storePlayer(PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        String name = p.getName();
-        e.setJoinMessage(ChatColor.AQUA + "Welcome to Davidiv's test server, " + name + "!");
         String uuid = p.getUniqueId().toString();
         if(!SmashMelee.getPlugin().getConfig().contains("Players." + uuid)) {
             SmashMelee.getPlugin().getConfig().set("Players." + uuid + ".Knockback", 0);

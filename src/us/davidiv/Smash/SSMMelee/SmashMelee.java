@@ -4,7 +4,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import us.davidiv.Smash.SSMMelee.Game.DoubleJump;
+import us.davidiv.Smash.SSMMelee.Game.Game;
 import us.davidiv.Smash.SSMMelee.Game.Knockback;
+import us.davidiv.Smash.SSMMelee.Game.Stock;
 
 public class SmashMelee extends JavaPlugin {
 
@@ -16,9 +18,10 @@ public class SmashMelee extends JavaPlugin {
         plugin = this;
         new DoubleJump(this);
         new Knockback(this);
-        config.addDefault("youAreAwesome", true);
-
-
+        new JoinMessage(this);
+        new Stock(this);
+        new Game(this);
+        getCommand("gamestart").setExecutor(new Game(this));
 
     }
 
