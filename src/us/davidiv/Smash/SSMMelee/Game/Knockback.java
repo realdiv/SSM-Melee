@@ -38,33 +38,35 @@ public class Knockback implements Listener {
 
     @EventHandler
     public void Knockback(EntityDamageByEntityEvent e) {
-        boolean dmgM;
-        dmgM = false;
-        Entity p = e.getEntity();
-        Entity d = e.getDamager();
-        String uuid = p.getUniqueId().toString();
-        double damage = e.getDamage();
-        int dI = (int) damage;
-        if ((SmashMelee.getPlugin().getConfig().getInt("Players." + uuid + ".Knockback") + dI) >= 999) {
-            SmashMelee.getPlugin().getConfig().set("Players." + uuid + ".Knockback", 999);
-            kb = SmashMelee.getPlugin().getConfig().getInt("Players." + uuid + ".Knockback");
-            //((Player) p).sendRawMessage("Knockback is " + kb);
-            //((Player) p).sendRawMessage("Damage Int is " + dI);
-        } else {
-            SmashMelee.getPlugin().getConfig().set("Players." + uuid + ".Knockback",
-                    (SmashMelee.getPlugin().getConfig().getInt("Players." + uuid + ".Knockback") + dI));
-            kb = SmashMelee.getPlugin().getConfig().getInt("Players." + uuid + ".Knockback");
-            //((Player) p).sendRawMessage("Knockback is " + kb);
-            //((Player) p).sendRawMessage("Damage Int is " + dI);
-        }
-        SmashMelee.getPlugin().saveConfig();
-        if (p instanceof Player) {
-            p.setVelocity(d.getLocation().getDirection().multiply((kb / 100) + 0.5));
-            dmgM = true;
+        if (SmashMelee.getPlugin().getConfig().getBoolean("GameActive", true)) {
+            boolean dmgM;
+            dmgM = false;
+            Entity p = e.getEntity();
+            Entity d = e.getDamager();
+            String uuid = p.getUniqueId().toString();
+            double damage = e.getDamage();
+            int dI = (int) damage;
+            if ((SmashMelee.getPlugin().getConfig().getInt("Players." + uuid + ".Knockback") + dI) >= 999) {
+                SmashMelee.getPlugin().getConfig().set("Players." + uuid + ".Knockback", 999);
+                kb = SmashMelee.getPlugin().getConfig().getInt("Players." + uuid + ".Knockback");
+                //((Player) p).sendRawMessage("Knockback is " + kb);
+                //((Player) p).sendRawMessage("Damage Int is " + dI);
+            } else {
+                SmashMelee.getPlugin().getConfig().set("Players." + uuid + ".Knockback",
+                        (SmashMelee.getPlugin().getConfig().getInt("Players." + uuid + ".Knockback") + dI));
+                kb = SmashMelee.getPlugin().getConfig().getInt("Players." + uuid + ".Knockback");
+                //((Player) p).sendRawMessage("Knockback is " + kb);
+                //((Player) p).sendRawMessage("Damage Int is " + dI);
+            }
+            SmashMelee.getPlugin().saveConfig();
+            if (p instanceof Player) {
+                p.setVelocity(d.getLocation().getDirection().multiply((kb / 100) + 0.5));
+                dmgM = true;
 
-        }
-        if (dmgM == true){
-            e.setDamage(0);
+            }
+            if (dmgM == true) {
+                e.setDamage(0);
+            }
         }
     }
 

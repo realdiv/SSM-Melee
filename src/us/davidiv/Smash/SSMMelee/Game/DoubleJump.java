@@ -71,8 +71,10 @@ public class DoubleJump implements Listener {
 
     @EventHandler
     public void jump(PlayerToggleFlightEvent e) {
-        Player p = e.getPlayer();
-        velocity(p, p.getLocation().getDirection(), 2.0, false, 0, 3.0, 3.0, true);
+        if (SmashMelee.getPlugin().getConfig().getBoolean("GameActive", true)) {
+            Player p = e.getPlayer();
+            velocity(p, p.getLocation().getDirection(), 2.0, false, 1.0, 0.2, 7.0, true);
+        }
     }
 
     @EventHandler

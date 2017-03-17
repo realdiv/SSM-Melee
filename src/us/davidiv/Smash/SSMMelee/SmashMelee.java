@@ -18,6 +18,7 @@ public class SmashMelee extends JavaPlugin {
         new JoinMessage(this);
         new Stock(this);
         new Game(this);
+        new GameScoreboard(this);
         getCommand("gamestart").setExecutor(new GameStart(this));
         getCommand("gamestop").setExecutor(new GameStart(this));
 

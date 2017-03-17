@@ -32,14 +32,16 @@ public class Stock implements Listener {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
-        Player p = e.getEntity();
-        String uuid = p.getUniqueId().toString();
         if (SmashMelee.getPlugin().getConfig().getBoolean("GameActive", true)) {
-            int stock = SmashMelee.getPlugin().getConfig().getInt("Players." + uuid + ".Stock");
-            SmashMelee.getPlugin().getConfig().set("Players." + uuid + ".Stock", (stock - 1));
-            SmashMelee.getPlugin().saveConfig();
-            if (SmashMelee.getPlugin().getConfig().getInt("Players." + uuid + ".Stock") == 0) {
-                p.sendRawMessage("Out of stock");
+            Player p = e.getEntity();
+            String uuid = p.getUniqueId().toString();
+            if (SmashMelee.getPlugin().getConfig().getBoolean("GameActive", true)) {
+                int stock = SmashMelee.getPlugin().getConfig().getInt("Players." + uuid + ".Stock");
+                SmashMelee.getPlugin().getConfig().set("Players." + uuid + ".Stock", (stock - 1));
+                SmashMelee.getPlugin().saveConfig();
+                if (SmashMelee.getPlugin().getConfig().getInt("Players." + uuid + ".Stock") == 0) {
+                    p.sendRawMessage("Out of stock");
+                }
             }
         }
     }
