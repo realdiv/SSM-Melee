@@ -24,16 +24,19 @@ public class SmashMelee extends JavaPlugin {
         startUpdateHalf();
         startUpdateSecond();
 
+        //Random
+        new JoinMessage(this);
+        new BlockProtection(this);
+
         //Game Mechanics
         new DoubleJump(this);
         new Knockback(this);
-        new JoinMessage(this);
         new Stock(this);
         new Game(this);
         new GameScoreboard(this);
         new Respawn(this);
         new Void(this);
-        new BlockProtection(this);
+        new Stun(this);
 
         //Spider
         new KitSpider(this);
