@@ -17,101 +17,122 @@ public class GameScoreboard implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    //TODO ADD LINE BETWEEN TITLE AND FIRST NAME (BUG)
-
     private Team team;
     private Scoreboard board;
     private int i = 16;
-    private GameScoreboardManager GSM = new GameScoreboardManager(ChatColor.DARK_RED + "SSM MELEE");
+    private GameScoreboardManager GSM = new GameScoreboardManager(org.bukkit.ChatColor.DARK_RED + "" + org.bukkit.ChatColor.BOLD + "     SSM MELEE    ");
 
-/*
-0-99% green
-100-199% yellow
-200-299% orange
-300-599% red
-600-999% dark red
-1000%+ RAINBOW
-*/
 
+    int kb, stock;
+    String stockC;
 
     @EventHandler
-    public void ScoreboardTest(PlayerDeathEvent e) {
-        if (SmashMelee.getPlugin().getConfig().getBoolean("GameActive", true)) {
+    public void ScoreboardDeathUpdate(PlayerDeathEvent e) {
+        Boolean gameActive = Game.game.get("Game");
+        if (gameActive) {
             Player p = e.getEntity();
             String name = p.getName();
             String uuid = p.getUniqueId().toString();
-            GSM.add(ChatColor.RED + "&4", i);
             for (Player player : Bukkit.getServer().getOnlinePlayers()) {
                 String aname = player.getName();
-                String auuid = player.getUniqueId().toString();
-                int stock = SmashMelee.getPlugin().getConfig().getInt("Players." + auuid + ".Stock");
-                int kb = SmashMelee.getPlugin().getConfig().getInt("Players." + auuid + ".Knockback");
-                GSM.add(ChatColor.RED + "&4", i);
+                stock = Stock.stock.get(player);
+                kb = Knockback.knockback.get(player);
+                if (stock == 4) {
+                    stockC = ("••••");
+                }
+                if (stock == 3) {
+                    stockC = ("•••");
+                }
+                if (stock == 2) {
+                    stockC = ("••");
+                }
+                if (stock == 1) {
+                    stockC = ("•");
+                }
+                if (stock == 0) {
+                    stockC = "";
+                }
+                GSM.add(ChatColor.RED + " ", i);
                 i--;
                 GSM.add(ChatColor.GRAY + "" + aname, i);
                 i--;
-                if (kb < 99 && stock == 4) {
-                    GSM.add(ChatColor.GREEN + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stock, i);
+
+                //4 STOCK
+
+                if (kb < 100 && stock == 4) {
+                    GSM.add(ChatColor.GREEN + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stockC, i);
                 }
                 if (kb > 99 && kb < 200 && stock == 4) {
-                    GSM.add(ChatColor.YELLOW + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stock, i);
+                    GSM.add(ChatColor.YELLOW + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stockC, i);
                 }
                 if (kb > 199 && kb < 300 && stock == 4) {
-                    GSM.add(ChatColor.GOLD + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stock, i);
+                    GSM.add(ChatColor.GOLD + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stockC, i);
                 }
                 if (kb > 299 && kb < 600 && stock == 4) {
-                    GSM.add(ChatColor.RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stock, i);
+                    GSM.add(ChatColor.RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stockC, i);
                 }
                 if (kb > 599 && stock == 4) {
-                    GSM.add(ChatColor.DARK_RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stock, i);
+                    GSM.add(ChatColor.DARK_RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stockC, i);
                 }
-                if (kb < 99 && stock == 3) {
-                    GSM.add(ChatColor.GREEN + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.YELLOW + stock, i);
+
+                //3 STOCK
+
+                if (kb < 100 && stock == 3) {
+                    GSM.add(ChatColor.GREEN + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.YELLOW + stockC, i);
                 }
                 if (kb > 99 && kb < 200 && stock == 3) {
-                    GSM.add(ChatColor.YELLOW + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.YELLOW + stock, i);
+                    GSM.add(ChatColor.YELLOW + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.YELLOW + stockC, i);
                 }
                 if (kb > 199 && kb < 300 && stock == 3) {
-                    GSM.add(ChatColor.GOLD + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.YELLOW + stock, i);
+                    GSM.add(ChatColor.GOLD + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.YELLOW + stockC, i);
                 }
                 if (kb > 299 && kb < 600 && stock == 3) {
-                    GSM.add(ChatColor.RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.YELLOW + stock, i);
+                    GSM.add(ChatColor.RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.YELLOW + stockC, i);
                 }
                 if (kb > 599 && stock == 3) {
-                    GSM.add(ChatColor.DARK_RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.YELLOW + stock, i);
+                    GSM.add(ChatColor.DARK_RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.YELLOW + stockC, i);
                 }
-                if (kb < 99 && stock == 2) {
-                    GSM.add(ChatColor.GREEN + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GOLD + stock, i);
+
+                //2 STOCK
+
+                if (kb < 100 && stock == 2) {
+                    GSM.add(ChatColor.GREEN + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GOLD + stockC, i);
                 }
                 if (kb > 99 && kb < 200 && stock == 2) {
-                    GSM.add(ChatColor.YELLOW + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GOLD + stock, i);
+                    GSM.add(ChatColor.YELLOW + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GOLD + stockC, i);
                 }
                 if (kb > 199 && kb < 300 && stock == 2) {
-                    GSM.add(ChatColor.GOLD + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GOLD + stock, i);
+                    GSM.add(ChatColor.GOLD + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GOLD + stockC, i);
                 }
                 if (kb > 299 && kb < 600 && stock == 2) {
-                    GSM.add(ChatColor.RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GOLD + stock, i);
+                    GSM.add(ChatColor.RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GOLD + stockC, i);
                 }
                 if (kb > 599 && stock == 2) {
-                    GSM.add(ChatColor.DARK_RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GOLD + stock, i);
+                    GSM.add(ChatColor.DARK_RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GOLD + stockC, i);
                 }
-                if (kb < 99 && stock == 1) {
-                    GSM.add(ChatColor.GREEN + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.RED + stock, i);
+
+                //1 STOCK
+
+                if (kb < 100 && stock == 1) {
+                    GSM.add(ChatColor.GREEN + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.RED + stockC, i);
                 }
                 if (kb > 99 && kb < 200 && stock == 1) {
-                    GSM.add(ChatColor.YELLOW + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.RED + stock, i);
+                    GSM.add(ChatColor.YELLOW + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.RED + stockC, i);
                 }
                 if (kb > 199 && kb < 300 && stock == 1) {
-                    GSM.add(ChatColor.GOLD + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.RED + stock, i);
+                    GSM.add(ChatColor.GOLD + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.RED + stockC, i);
                 }
                 if (kb > 299 && kb < 600 && stock == 1) {
-                    GSM.add(ChatColor.RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.RED + stock, i);
+                    GSM.add(ChatColor.RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.RED + stockC, i);
                 }
                 if (kb > 599 && stock == 1) {
-                    GSM.add(ChatColor.DARK_RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.RED + stock, i);
+                    GSM.add(ChatColor.DARK_RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.RED + stockC, i);
                 }
+
+                //NO STOCK
+
                 if (stock == 0) {
-                    GSM.add(ChatColor.GRAY + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GRAY + stock, i);
+                    GSM.add(ChatColor.GRAY + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GRAY + stockC, i);
                 }
                 i--;
                 GSM.add(ChatColor.RED + "&4", i);
@@ -119,88 +140,118 @@ public class GameScoreboard implements Listener {
                 GSM.send(player);
                 GSM.update();
             }
+            GSM.add(ChatColor.RED + " ", i);
             i = 16;
         }
     }
 
     @EventHandler
     public void ScoreboardKBUpdate(EntityDamageByEntityEvent e) {
-        if (SmashMelee.getPlugin().getConfig().getBoolean("GameActive", true)) {
+        Boolean gameActive = Game.game.get("Game");
+        if (gameActive) {
             Entity p = e.getEntity();
             String name = p.getName();
             String uuid = p.getUniqueId().toString();
-            GSM.add(ChatColor.RED + "&4", i);
             for (Player player : Bukkit.getServer().getOnlinePlayers()) {
                 String aname = player.getName();
-                String auuid = player.getUniqueId().toString();
-                int stock = SmashMelee.getPlugin().getConfig().getInt("Players." + auuid + ".Stock");
-                int kb = SmashMelee.getPlugin().getConfig().getInt("Players." + auuid + ".Knockback");
-                GSM.add(ChatColor.RED + "&4", i);
+                stock = Stock.stock.get(player);
+                kb = Knockback.knockback.get(player);
+                if (stock == 4) {
+                    stockC = ("••••");
+                }
+                if (stock == 3) {
+                    stockC = ("•••");
+                }
+                if (stock == 2) {
+                    stockC = ("••");
+                }
+                if (stock == 1) {
+                    stockC = ("•");
+                }
+                if (stock == 0) {
+                    stockC = "";
+                }
+                GSM.add(ChatColor.RED + " ", i);
                 i--;
                 GSM.add(ChatColor.GRAY + "" + aname, i);
                 i--;
-                if (kb < 99 && stock == 4) {
-                    GSM.add(ChatColor.GREEN + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stock, i);
+
+                //4 STOCK
+
+                if (kb < 100 && stock == 4) {
+                    GSM.add(ChatColor.GREEN + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stockC, i);
                 }
                 if (kb > 99 && kb < 200 && stock == 4) {
-                    GSM.add(ChatColor.YELLOW + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stock, i);
+                    GSM.add(ChatColor.YELLOW + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stockC, i);
                 }
                 if (kb > 199 && kb < 300 && stock == 4) {
-                    GSM.add(ChatColor.GOLD + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stock, i);
+                    GSM.add(ChatColor.GOLD + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stockC, i);
                 }
                 if (kb > 299 && kb < 600 && stock == 4) {
-                    GSM.add(ChatColor.RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stock, i);
+                    GSM.add(ChatColor.RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stockC, i);
                 }
                 if (kb > 599 && stock == 4) {
-                    GSM.add(ChatColor.DARK_RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stock, i);
+                    GSM.add(ChatColor.DARK_RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stockC, i);
                 }
-                if (kb < 99 && stock == 3) {
-                    GSM.add(ChatColor.GREEN + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.YELLOW + stock, i);
+
+                //3 STOCK
+
+                if (kb < 100 && stock == 3) {
+                    GSM.add(ChatColor.GREEN + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.YELLOW + stockC, i);
                 }
                 if (kb > 99 && kb < 200 && stock == 3) {
-                    GSM.add(ChatColor.YELLOW + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.YELLOW + stock, i);
+                    GSM.add(ChatColor.YELLOW + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.YELLOW + stockC, i);
                 }
                 if (kb > 199 && kb < 300 && stock == 3) {
-                    GSM.add(ChatColor.GOLD + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.YELLOW + stock, i);
+                    GSM.add(ChatColor.GOLD + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.YELLOW + stockC, i);
                 }
                 if (kb > 299 && kb < 600 && stock == 3) {
-                    GSM.add(ChatColor.RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.YELLOW + stock, i);
+                    GSM.add(ChatColor.RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.YELLOW + stockC, i);
                 }
                 if (kb > 599 && stock == 3) {
-                    GSM.add(ChatColor.DARK_RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.YELLOW + stock, i);
+                    GSM.add(ChatColor.DARK_RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.YELLOW + stockC, i);
                 }
-                if (kb < 99 && stock == 2) {
-                    GSM.add(ChatColor.GREEN + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GOLD + stock, i);
+
+                //2 STOCK
+
+                if (kb < 100 && stock == 2) {
+                    GSM.add(ChatColor.GREEN + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GOLD + stockC, i);
                 }
                 if (kb > 99 && kb < 200 && stock == 2) {
-                    GSM.add(ChatColor.YELLOW + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GOLD + stock, i);
+                    GSM.add(ChatColor.YELLOW + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GOLD + stockC, i);
                 }
                 if (kb > 199 && kb < 300 && stock == 2) {
-                    GSM.add(ChatColor.GOLD + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GOLD + stock, i);
+                    GSM.add(ChatColor.GOLD + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GOLD + stockC, i);
                 }
                 if (kb > 299 && kb < 600 && stock == 2) {
-                    GSM.add(ChatColor.RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GOLD + stock, i);
+                    GSM.add(ChatColor.RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GOLD + stockC, i);
                 }
                 if (kb > 599 && stock == 2) {
-                    GSM.add(ChatColor.DARK_RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GOLD + stock, i);
+                    GSM.add(ChatColor.DARK_RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GOLD + stockC, i);
                 }
-                if (kb < 99 && stock == 1) {
-                    GSM.add(ChatColor.GREEN + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.RED + stock, i);
+
+                //1 STOCK
+
+                if (kb < 100 && stock == 1) {
+                    GSM.add(ChatColor.GREEN + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.RED + stockC, i);
                 }
                 if (kb > 99 && kb < 200 && stock == 1) {
-                    GSM.add(ChatColor.YELLOW + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.RED + stock, i);
+                    GSM.add(ChatColor.YELLOW + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.RED + stockC, i);
                 }
                 if (kb > 199 && kb < 300 && stock == 1) {
-                    GSM.add(ChatColor.GOLD + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.RED + stock, i);
+                    GSM.add(ChatColor.GOLD + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.RED + stockC, i);
                 }
                 if (kb > 299 && kb < 600 && stock == 1) {
-                    GSM.add(ChatColor.RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.RED + stock, i);
+                    GSM.add(ChatColor.RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.RED + stockC, i);
                 }
                 if (kb > 599 && stock == 1) {
-                    GSM.add(ChatColor.DARK_RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.RED + stock, i);
+                    GSM.add(ChatColor.DARK_RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.RED + stockC, i);
                 }
+
+                //NO STOCK
+
                 if (stock == 0) {
-                    GSM.add(ChatColor.GRAY + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GRAY + stock, i);
+                    GSM.add(ChatColor.GRAY + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GRAY + stockC, i);
                 }
                 i--;
                 GSM.add(ChatColor.RED + "&4", i);
@@ -208,9 +259,10 @@ public class GameScoreboard implements Listener {
                 GSM.send(player);
                 GSM.update();
             }
+            GSM.add(ChatColor.RED + " ", i);
             i = 16;
         }
     }
-
-
 }
+
+

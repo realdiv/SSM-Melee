@@ -1,5 +1,5 @@
 name: SSM Melee
-version: 0.0.1.0.4.1
+version: 0.1.0.4.1
 author: Davidiv
 main: us.davidiv.Smash.SSMMelee.SmashMelee
 commands:
@@ -7,3 +7,9 @@ commands:
     description: starts the game
   gamestop:
     description: stops the game
+  stock:
+    description: debug
+  kitspider:
+    description: spider kit
+  kitslime:
+    description: slime kit
