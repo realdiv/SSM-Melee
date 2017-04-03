@@ -75,10 +75,12 @@ public class Grow implements Listener {
 
             MobDisguise magmamob = new MobDisguise(DisguiseType.MAGMA_CUBE);
             SlimeWatcher magma = (SlimeWatcher) magmamob.getWatcher();
+            magmamob.setViewSelfDisguise(false);
             magma.setSize(s);
 
             MobDisguise slimemob = new MobDisguise(DisguiseType.SLIME);
             SlimeWatcher slime = (SlimeWatcher) slimemob.getWatcher();
+            slimemob.setViewSelfDisguise(false);
             slime.setSize(s);
 
             Disguise disguise = getDisguise(p);

@@ -1,5 +1,6 @@
 package us.davidiv.Smash.SSMMelee.Kit.Slime;
 
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,6 +29,7 @@ public class Overheat implements Listener {
             double damage = oh.get(p);
             if (damage >= 200) {
                 overheat.put(p, true);
+                p.playSound(p.getLocation(), Sound.LAVA_POP, 2, 2);
             }
         }
     }

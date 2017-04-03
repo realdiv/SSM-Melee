@@ -37,60 +37,11 @@ public class KitSlime implements CommandExecutor, Listener {
         Overheat.oh.put(p, 0.0);
         MobDisguise mob = new MobDisguise(DisguiseType.SLIME);
         SlimeWatcher slime = (SlimeWatcher) mob.getWatcher();
-        //MobDisguise mobF = new MobDisguise(DisguiseType.MAGMA_CUBE);
-        //SlimeWatcher magma = (SlimeWatcher) mobF.getWatcher();
         mob.setShowName(true);
         mob.setViewSelfDisguise(false);
         mob.setKeepDisguiseOnPlayerDeath(true);
-        //mobF.setShowName(true);
-        //mobF.setViewSelfDisguise(false);
-        //mobF.setKeepDisguiseOnPlayerDeath(true);
         ds.disguiseEntity(p, mob);
-        /*new BukkitRunnable() {
-            public void run() {
-                String kitP = Kit.kit.get(p);
-                if (kitP.equals("Slime")) {
-                    if (p.getExp() < .999 && !p.isDead() && p.getGameMode() == GameMode.SURVIVAL)
-                    p.setExp((p.getExp() + .01f));
-                } else {
-                    cancel();
-                }
-            }
-        }.runTaskTimerAsynchronously(SmashMelee.getPlugin(), 0L, 1L);
-        new BukkitRunnable() {
-            public void run() {
-                String kitP = Kit.kit.get(p);
-                    Boolean magmacube = Overheat.overheat.get(p);
-                    if (kitP.equals("Slime") && magmacube) {
-
-                        int size = 1;
-                        if (p.getExp() > 0.8) size = 3;
-                        else if (p.getExp() > 0.55) size = 2;
-
-                        if (magma.getSize() != size) {
-                            magma.setSize(size);
-                            ds.disguiseEntity(p, mobF);
-                        }
-
-
-                    } else if (kitP.equals("Slime") && !magmacube) {
-
-                        int size = 1;
-                        if (p.getExp() > 0.8) size = 3;
-                        else if (p.getExp() > 0.55) size = 2;
-
-                        if (slime.getSize() != size) {
-                            slime.setSize(size);
-                            ds.disguiseEntity(p, mob);
-                        }
-
-                } else { cancel(); }
-            }
-        }.runTaskTimer(SmashMelee.getPlugin(), 0L, 10L); */
         return true;
     }
-
-    //TODO DONT LET BUKKITRUNNABLES STACK ON /KITSLIME COMMAND
-
 
 }

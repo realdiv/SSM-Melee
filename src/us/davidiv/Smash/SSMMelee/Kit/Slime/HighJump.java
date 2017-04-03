@@ -14,7 +14,7 @@ import us.davidiv.Smash.SSMMelee.SmashMelee;
  */
 public class HighJump implements Listener {
     public HighJump(SmashMelee plugin) {
-        SmashMelee.getPlugin().getServer().getPluginManager().registerEvents(this, plugin);
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     @EventHandler

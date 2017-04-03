@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
 import us.davidiv.Smash.SSMMelee.Events.UpdateEvent;
 import us.davidiv.Smash.SSMMelee.Events.UpdateType;
@@ -16,10 +15,7 @@ import us.davidiv.Smash.SSMMelee.Kit.Spider.Needler;
 
 public class SmashMelee extends JavaPlugin {
 
-    private static Plugin plugin; // <-- Where you store an instance of your main class
-    //FileConfiguration config = getConfig();
-
-    public static BukkitScheduler bs;
+    private static Plugin plugin;
 
     @Override
     public void onEnable() {
@@ -50,20 +46,14 @@ public class SmashMelee extends JavaPlugin {
         new Overheat(this);
         new Grow(this);
         new HighJump(this);
-
+        new SlimeSM(this);
 
         getCommand("gamestart").setExecutor(new GameStart(this));
         getCommand("gamestop").setExecutor(new GameStart(this));
         getCommand("stock").setExecutor(new GameStart(this));
         getCommand("kitspider").setExecutor(new KitSpider(this));
         getCommand("kitslime").setExecutor(new KitSlime(this));
-        regTimers();
 
-
-    }
-
-    private void regTimers() {
-        //bs.runTaskTimerAsynchronously(this, new Grow(), 0L, 10L);
     }
 
     public static Plugin getPlugin() {
