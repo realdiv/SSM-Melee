@@ -32,12 +32,12 @@ public class Knockback implements Listener {
             Entity d = e.getDamager();
             double damage = e.getDamage();
             int dI = (int) damage;
-            if (((Knockback.knockback.get(p)) + dI) >= 999) {
-                Knockback.knockback.put(p, 999);
-                kb = Knockback.knockback.get(p);
+            if (((knockback.get(p)) + dI) >= 999) {
+                knockback.put(p, 999);
+                kb = knockback.get(p);
             } else {
-                Knockback.knockback.put(p, ((Knockback.knockback.get(p)) + dI));
-                kb = Knockback.knockback.get(p);
+                knockback.put(p, ((knockback.get(p)) + dI));
+                kb = knockback.get(p);
             }
             e.setDamage(0);
             e.setCancelled(true);
@@ -51,7 +51,7 @@ public class Knockback implements Listener {
         if (gameActive) {
             Player p = (Player) e.getEntity();
             if (e.getCause().equals(EntityDamageEvent.DamageCause.FIRE) || e.getCause().equals(EntityDamageEvent.DamageCause.FIRE_TICK)) {
-                Knockback.knockback.put(p, ((Knockback.knockback.get(p)) + 2));
+                knockback.put(p, ((knockback.get(p)) + 2));
             }
         }
     }

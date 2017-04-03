@@ -30,11 +30,8 @@ public class Void implements Listener {
     public void VoidBorder(UpdateEvent e) {
         Boolean gameActive = Game.game.get("Game");
 
-        if (e.getType() != UpdateType.TICK)
-            if (!gameActive) {
-                return;
-            }
-
+        if (e.getType() != UpdateType.TICK) {return;}
+        if (!gameActive) {return;}
         for (Player p : Bukkit.getOnlinePlayers()) {
             World world = Bukkit.getServer().getWorld("HyruleCastle");
             if (p.getWorld() == world && !p.isDead() && p.getGameMode() != GameMode.SPECTATOR) {
