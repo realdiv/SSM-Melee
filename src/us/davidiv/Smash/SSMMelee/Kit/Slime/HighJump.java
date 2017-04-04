@@ -9,9 +9,6 @@ import us.davidiv.Smash.SSMMelee.Game.Kit;
 import us.davidiv.Smash.SSMMelee.Kit.Kits;
 import us.davidiv.Smash.SSMMelee.SmashMelee;
 
-/**
- * Created by David on 3/15/2017.
- */
 public class HighJump implements Listener {
     public HighJump(SmashMelee plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);

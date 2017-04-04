@@ -18,7 +18,7 @@ it'll open up the GUI and you're free to start changing shit.
 
       -Stock values - Whether it be what you start off with or how many you have in the game.
 
-      -Damage values - Whether it be ability damage, melee damager or even entity damage!
+      -Damage values - Whether it be ability damage, melee damage or even entity damage!
 
       -Knockback values - Not to be confused with Knockback Multiplier, this will allow you to change the knockback of
                           melee, abilities or again, entities.

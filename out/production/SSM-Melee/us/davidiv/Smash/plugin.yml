@@ -13,3 +13,17 @@ commands:
     description: spider kit
   kitslime:
     description: slime kit
+  kitcreeper:
+    description: creeper kit
+  kitskeleton:
+    description: skeleton kit
+  kitzombie:
+    description: zombie kit
+  kitwolf:
+    description: wolf kit
+  kitsquid:
+    description: squid kit
+  kitchicken:
+    description: chicken kit
+  kitcavespider:
+    description: cavespider kit

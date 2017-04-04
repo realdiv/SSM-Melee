@@ -67,11 +67,14 @@ public class Grow implements Listener {
 
         for (Player p : Bukkit.getOnlinePlayers()) {
 
+            if (!Kit.kit.containsKey(p))  {return;}
             Kits kitP = Kit.kit.get(p);
-            Boolean magmacube = Overheat.overheat.get(p);
-            int s = siz.get(p);
 
             if (kitP != Kits.SLIME) {return;}
+            Boolean magmacube = Overheat.overheat.get(p);
+            if(!siz.containsKey(p)) {return;}
+            int s = siz.get(p);
+
 
             MobDisguise magmamob = new MobDisguise(DisguiseType.MAGMA_CUBE);
             SlimeWatcher magma = (SlimeWatcher) magmamob.getWatcher();
