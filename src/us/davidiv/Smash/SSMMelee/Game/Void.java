@@ -1,7 +1,5 @@
 package us.davidiv.Smash.SSMMelee.Game;
 
-//Void border than instantly kills you when you cross it - 9001 damage for the memes
-
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.World;

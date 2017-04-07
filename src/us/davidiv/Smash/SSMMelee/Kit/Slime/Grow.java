@@ -99,7 +99,6 @@ public class Grow implements Listener {
         }
     }
 
-
     @EventHandler
     public void updateSize(UpdateEvent e) {
 

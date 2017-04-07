@@ -39,7 +39,7 @@ public class GameStart implements CommandExecutor, Listener {
                 for (Player player : Bukkit.getServer().getOnlinePlayers()) {
                     Knockback.knockback.put(player, 0);
                     Stock.stock.put(player, 4);
-                    Game.winner.put(player, true);
+                    Game.alive.put(player, true);
                 }
                 for (Player player : Bukkit.getServer().getOnlinePlayers()) {
                     String aname = player.getName();
@@ -84,8 +84,7 @@ public class GameStart implements CommandExecutor, Listener {
                     player.setGameMode(GameMode.SURVIVAL);
                     Knockback.knockback.put(player, 0);
                     Stock.stock.put(player, 0);
-                    Game.dead.put(player, false);
-                    Game.winner.remove(player);
+                    Game.alive.remove(player);
                     GSM.reset();
                     GSM.send(player);
                 }

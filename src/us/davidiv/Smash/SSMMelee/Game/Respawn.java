@@ -42,8 +42,7 @@ public class Respawn implements Listener {
                 p.setGameMode(GameMode.SPECTATOR);
                 p.teleport(new Location(Bukkit.getWorld("HyruleCastle"), -27.5, 30.0, 19.5));
                 p.sendRawMessage(ChatColor.DARK_RED + "YOU ARE OUT OF THE GAME!");
-                Game.dead.put(p, true);
-                Game.winner.remove(p);
+                Game.alive.remove(p);
             }
         }
     }

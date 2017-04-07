@@ -1,7 +1,5 @@
 package us.davidiv.Smash.SSMMelee.Game;
 
-//KitSpider manager for making stats easy
-
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -13,7 +11,6 @@ import java.util.HashMap;
 public class Kit {
 
     public static HashMap<Player, Kits>kit  = new HashMap<Player, Kits>();
-
 
     public static void kitM(Player p, Kits kitName, String pName, String sName, Material primaryItem, Material secondaryItem) {
         Kit.kit.put(p, kitName);

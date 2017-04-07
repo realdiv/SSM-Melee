@@ -9,7 +9,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import us.davidiv.Smash.SSMMelee.Events.UpdateEvent;
+import us.davidiv.Smash.SSMMelee.Events.UpdateType;
 import us.davidiv.Smash.SSMMelee.SmashMelee;
 
 import java.util.HashMap;
@@ -19,42 +20,45 @@ public class Game implements Listener {
 
     private GameScoreboardManager GSM = new GameScoreboardManager(org.bukkit.ChatColor.DARK_RED + "" + org.bukkit.ChatColor.BOLD + "     SSM MELEE    ");
 
-    public static HashMap<Player, Boolean> dead = new HashMap<Player, Boolean>();
-    public static HashMap<Player, Boolean> winner = new HashMap<Player, Boolean>();
+    public static HashMap<Player, Boolean> alive = new HashMap<Player, Boolean>();
     public static HashMap<String, Boolean> game = new HashMap<String, Boolean>();
 
-    int i = 2;
+    @EventHandler
+    public void winnerCheck(UpdateEvent e) {
 
-        @EventHandler
-        public void winnerCheck(PlayerDeathEvent e) {
-            Boolean gameActive = game.get("Game");
-            Player pU = (Player) e.getEntity();
-            if (Stock.stock.get(pU) <= 0) {
-                Game.winner.remove(pU);
-            }
-            if (gameActive) {
-                int size = winner.size();
-                if (size == 1) {
-                    for (Player player : winner.keySet()) {
-                        int stock = Stock.stock.get(player);
-                        if (stock > 0) {
-                            String name = player.getName();
-                            Bukkit.broadcastMessage(ChatColor.AQUA + "" + name + " has won the game!");
-                                    for (Player p : Bukkit.getOnlinePlayers()) {
-                                        p.setGameMode(GameMode.SURVIVAL);
-                                        p.teleport(new Location(Bukkit.getWorld("HyruleCastle"), -27.5, 30.0, 19.5));
-                                        p.setAllowFlight(false);
-                                        p.setFlying(false);
-                                        Knockback.knockback.put(p, 0);
-                                        Stock.stock.put(p, 0);
-                                        dead.put(p, false);
-                                        GSM.reset();
-                                        GSM.send(p);
-                                    }
-                            game.put("Game", false);
-                                }
-                            }
-                        }
-                    }
-                }
+        if (e.getType() != UpdateType.TICK) {return;}
+
+        Boolean gameActive = game.get("Game");
+        Boolean b;
+
+        if (!gameActive) {return;}
+
+        int size = alive.size();
+        if (size != 1) {return;}
+        for (Player player : alive.keySet()) {
+            int stock = Stock.stock.get(player);
+            if (stock <= 0) {return;}
+
+            String name = player.getName();
+            Bukkit.broadcastMessage(ChatColor.AQUA + "" + name + " has won the game!");
+            game.put("Game", false);
+            gameActive = game.get("Game");
+        }
+
+        if (gameActive) {return;}
+
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            p.setGameMode(GameMode.SURVIVAL);
+            p.teleport(new Location(Bukkit.getWorld("HyruleCastle"), -27.5, 30.0, 19.5));
+            p.setAllowFlight(false);
+            p.setFlying(false);
+            Knockback.knockback.put(p, 0);
+            Stock.stock.put(p, 0);
+            GSM.reset();
+            GSM.send(p);
+            p.sendRawMessage(ChatColor.GREEN + "Thank you for playing the test version of SSM Melee!");
+        }
+    }
+
+
 }
