@@ -8,76 +8,62 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import us.davidiv.Smash.SSMMelee.SmashMelee;
+
+import java.util.HashMap;
 
 public class Knockback implements Listener {
     public Knockback(SmashMelee plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
+    public static HashMap<Player, Integer> knockback = new HashMap<Player, Integer>();
+
     int kb = 0;
     int dI = 0;
 
-    public Knockback() {
-    }
-
-    @EventHandler
-    public void storePlayer(PlayerJoinEvent e) {
-        Player p = e.getPlayer();
-        String uuid = p.getUniqueId().toString();
-        if (!SmashMelee.getPlugin().getConfig().contains("Players." + uuid)) {
-            SmashMelee.getPlugin().getConfig().set("Players." + uuid + ".Knockback", 0);
-            SmashMelee.getPlugin().saveConfig();
-        } else {
-            SmashMelee.getPlugin().getConfig().set("Players." + uuid + ".Knockback", 0);
-            SmashMelee.getPlugin().saveConfig();
-        }
-    }
-
     @EventHandler
     public void Knockback(EntityDamageByEntityEvent e) {
-        if (SmashMelee.getPlugin().getConfig().getBoolean("GameActive", true)) {
-            boolean dmgM;
-            dmgM = false;
-            Entity p = e.getEntity();
+        Boolean gameActive = Game.game.get("Game");
+        if (gameActive) {
+            Player p = (Player) e.getEntity();
             Entity d = e.getDamager();
-            String uuid = p.getUniqueId().toString();
             double damage = e.getDamage();
             int dI = (int) damage;
-            if ((SmashMelee.getPlugin().getConfig().getInt("Players." + uuid + ".Knockback") + dI) >= 999) {
-                SmashMelee.getPlugin().getConfig().set("Players." + uuid + ".Knockback", 999);
-                kb = SmashMelee.getPlugin().getConfig().getInt("Players." + uuid + ".Knockback");
-                //((Player) p).sendRawMessage("Knockback is " + kb);
-                //((Player) p).sendRawMessage("Damage Int is " + dI);
+            if (((knockback.get(p)) + dI) >= 999) {
+                knockback.put(p, 999);
+                kb = knockback.get(p);
             } else {
-                SmashMelee.getPlugin().getConfig().set("Players." + uuid + ".Knockback",
-                        (SmashMelee.getPlugin().getConfig().getInt("Players." + uuid + ".Knockback") + dI));
-                kb = SmashMelee.getPlugin().getConfig().getInt("Players." + uuid + ".Knockback");
-                //((Player) p).sendRawMessage("Knockback is " + kb);
-                //((Player) p).sendRawMessage("Damage Int is " + dI);
+                knockback.put(p, ((knockback.get(p)) + dI));
+                kb = knockback.get(p);
             }
-            SmashMelee.getPlugin().saveConfig();
-            if (p instanceof Player) {
-                p.setVelocity(d.getLocation().getDirection().multiply((kb / 100) + 0.5));
-                dmgM = true;
+            e.setDamage(0);
+            e.setCancelled(true);
+            p.setVelocity(d.getLocation().getDirection().multiply((kb / 100) + 1));
+        }
+    }
 
-            }
-            if (dmgM == true) {
-                e.setDamage(0);
+    @EventHandler
+    public void KBFire(EntityDamageEvent e) {
+        Boolean gameActive = Game.game.get("Game");
+        if (gameActive) {
+            Player p = (Player) e.getEntity();
+            if (e.getCause().equals(EntityDamageEvent.DamageCause.FIRE) || e.getCause().equals(EntityDamageEvent.DamageCause.FIRE_TICK)) {
+                knockback.put(p, ((knockback.get(p)) + 2));
             }
         }
     }
+
+    //TODO RE-ADD HIT EFFECT WITH PACKETS
+
 
     @EventHandler
         public void KBReset(PlayerDeathEvent e) {
             Player p = e.getEntity();
-            if (p instanceof Player) {
-                String uuid = p.getUniqueId().toString();
-                SmashMelee.getPlugin().getConfig().set("Players." + uuid + ".Knockback", 0);
-                SmashMelee.getPlugin().saveConfig();
-            }
+            Knockback.knockback.put(p, 0);
+
     }
 
 }

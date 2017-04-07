@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -29,11 +30,16 @@ public class JoinMessage implements Listener {
             Player p = e.getPlayer();
             String name = p.getName();
             String msg = e.getMessage();
-            if (name.equals("Davidiv")) {
-                e.setMessage(ChatColor.LIGHT_PURPLE + "DEV " + ChatColor.GRAY + name + " " + ChatColor.WHITE + msg);
+            if (name.equals("MixtapeDropper") || name.equals("Deidara") || name.equals("broswen")) {
+                e.setFormat(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "DEV " + ChatColor.GRAY + name + " " + ChatColor.WHITE + msg);
             } else {
-                e.setMessage(ChatColor.AQUA + "RANDY " + ChatColor.GRAY + name + " " + ChatColor.WHITE + msg);
+                e.setFormat(ChatColor.AQUA + "" + ChatColor.BOLD + "RANDY " + ChatColor.GRAY + name + " " + ChatColor.WHITE + msg);
             }
+        }
+
+        @EventHandler
+        public void Hunger(FoodLevelChangeEvent e) {
+            e.setCancelled(true);
         }
 
 }
