@@ -18,14 +18,14 @@ public class GameScoreboard implements Listener {
 
     private Team team;
     private Scoreboard board;
-    private int i = 16;
-    private GameScoreboardManager GSM = new GameScoreboardManager(org.bukkit.ChatColor.DARK_RED + "" + org.bukkit.ChatColor.BOLD + "     SSM MELEE    ");
+    private static int i = 16;
+    public static GameScoreboardManager GSM = new GameScoreboardManager(org.bukkit.ChatColor.DARK_RED + "" + org.bukkit.ChatColor.BOLD + "     SSM MELEE    ");
 
 
-    int kb, stock;
-    String stockC;
+    private static int kb, stock;
+    private static String stockC;
 
-    public void updateSmashScoreboard() {
+    public static void updateSmashScoreboard() {
         Boolean gameActive = Game.game.get("Game");
         if (gameActive) {
             for (Player player : Bukkit.getServer().getOnlinePlayers()) {

@@ -17,6 +17,8 @@ import us.davidiv.Smash.SSMMelee.Game.Knockback;
 import us.davidiv.Smash.SSMMelee.Kit.Kits;
 import us.davidiv.Smash.SSMMelee.SmashMelee;
 
+import static us.davidiv.Smash.SSMMelee.Game.GameScoreboard.updateSmashScoreboard;
+
 /*
 Slime Rocket rip-off xD!
  */
@@ -39,6 +41,7 @@ public class SlimeToss implements Listener {
                         if (entity != (Entity) p) {
                             Knockback.knockback.put((Player) entity, (Knockback.knockback.get((Player) entity) + 40));
                             entity.setVelocity(slime.getLocation().getDirection().multiply((Knockback.knockback.get((Player) entity) / 100) * 2));
+                            updateSmashScoreboard();
                             cancel();
                         }
                     }
