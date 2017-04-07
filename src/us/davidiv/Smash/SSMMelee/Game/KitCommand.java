@@ -29,7 +29,7 @@ public class KitCommand implements CommandExecutor {
                 if(args.length == 0 ) {
                     p.sendMessage(ChatColor.RED + "Kits: " + ChatColor.WHITE + "Cave Spider, Chicken, Creeper, Skeleton, Slime, Spider, Squid, Wolf & Zombie!");
                     p.sendMessage(" ");
-                    p.sendMessage(ChatColor.RED + "Please use select your kit by doing /kit <kit>");
+                    p.sendMessage(ChatColor.RED + "Select your kit by doing /kit <kit>");
                 }
 
                 if(args.length == 1) {
