@@ -12,8 +12,6 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 import us.davidiv.Smash.SSMMelee.SmashMelee;
 
-import java.util.HashMap;
-
 
 public class GameStart implements CommandExecutor, Listener {
     public GameStart(SmashMelee plugin) {
@@ -27,13 +25,13 @@ public class GameStart implements CommandExecutor, Listener {
 
     String stockC;
 
-    public static HashMap<String, Boolean> GameActive = new HashMap<String, Boolean>();
+    private static Boolean game;
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
             if (cmd.getName().equalsIgnoreCase("gamestart")) {
-                Game.game.put("Game", true);
+                game = true;
                 Player p = ((Player) sender).getPlayer();
                 ((Player) sender).sendRawMessage("Game Activated");
                 for (Player player : Bukkit.getServer().getOnlinePlayers()) {
@@ -77,7 +75,7 @@ public class GameStart implements CommandExecutor, Listener {
             }
 
             if (cmd.getName().contentEquals("gamestop")) {
-                Game.game.put("Game", false);
+                game = false;
                 Player p = ((Player) sender).getPlayer();
                 ((Player) sender).sendRawMessage("Game Deactivated");
                 for (Player player : Bukkit.getServer().getOnlinePlayers()) {
@@ -112,6 +110,12 @@ public class GameStart implements CommandExecutor, Listener {
         return true;
     }
 
+    public static Boolean getGame() {
+        return game;
+    }
 
+    public static void setGame(Boolean active) {
+        game = active;
+    }
 
 }

@@ -17,16 +17,27 @@ public class Stock implements Listener {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
-        Boolean gameActive = Game.game.get("Game");
-        if (gameActive) {
-            Player p = e.getEntity();
-            Player d = (Player) p.getKiller();
-            if (stock.get(p) > 0) {
-                stock.put(p, (stock.get(p) - 1));
-                int stockAmount = stock.get(p);
-                //Bukkit.broadcastMessage(p + " has been killed by" + d + "")
-            }
-        }
+
+        if (!getGame()) {return;}
+
+        Player p = e.getEntity();
+        if (getStock(p) == null || getStock(p) <= 0) {return;}
+
+        addStock(p, -1);
+
+        respawn(p);
+    }
+
+    public static Integer getStock(Player p) {
+        return stock.get(p);
+    }
+
+    public static void addStock(Player p, Integer add) {
+        setStock(p, (getStock(p) + add));
+    }
+
+    public static void setStock(Player p, Integer amount) {
+        stock.put(p, amount);
     }
 
 }
