@@ -12,6 +12,12 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 import us.davidiv.Smash.SSMMelee.SmashMelee;
 
+import static us.davidiv.Smash.SSMMelee.Game.Game.setLiving;
+import static us.davidiv.Smash.SSMMelee.Game.Knockback.getKnockback;
+import static us.davidiv.Smash.SSMMelee.Game.Knockback.setKnockback;
+import static us.davidiv.Smash.SSMMelee.Game.Stock.getStock;
+import static us.davidiv.Smash.SSMMelee.Game.Stock.setStock;
+
 
 public class GameStart implements CommandExecutor, Listener {
     public GameStart(SmashMelee plugin) {
@@ -35,14 +41,13 @@ public class GameStart implements CommandExecutor, Listener {
                 Player p = ((Player) sender).getPlayer();
                 ((Player) sender).sendRawMessage("Game Activated");
                 for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-                    Knockback.knockback.put(player, 0);
-                    Stock.stock.put(player, 4);
-                    Game.alive.put(player, true);
+                    setKnockback(player, 0);
+                    setStock(player, 4);
+                    setLiving(player, true);
                 }
                 for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-                    String aname = player.getName();
-                    int kb = Knockback.knockback.get(player);
-                    int stockA = Stock.stock.get(player);
+                    int kb = getKnockback(player);
+                    int stockA = getStock(player);
                     if (stockA == 4) {
                         stockC = ("••••");
                     }
@@ -62,7 +67,7 @@ public class GameStart implements CommandExecutor, Listener {
 
                     GSM.add(ChatColor.RED + " ", i);
                     i--;
-                    GSM.add(ChatColor.GRAY  + "" + aname, i);
+                    GSM.add(ChatColor.GRAY  + "" + player.getName(), i);
                     i--;
                     GSM.add(ChatColor.GREEN + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stockC, i);
                     i--;
@@ -81,23 +86,22 @@ public class GameStart implements CommandExecutor, Listener {
                 for (Player player : Bukkit.getServer().getOnlinePlayers()) {
                     player.setGameMode(GameMode.SURVIVAL);
                     Knockback.knockback.put(player, 0);
-                    Stock.stock.put(player, 0);
-                    Game.alive.remove(player);
+                    setStock(player, 0);
+                    setLiving(player, false);
                     GSM.reset();
                     GSM.send(player);
                 }
             }
             if (cmd.getName().contentEquals("stock")) {
                 Player p = ((Player) sender).getPlayer();
-                Knockback.knockback.put(p, 1041);
-                Stock.stock.put(p, 2);
-                int kb = Knockback.knockback.get(p);
-                int stockA = Stock.stock.get(p);
-                String aname = p.getName();
+                setKnockback(p, 1041);
+                setStock(p, 2);
+                int kb = getKnockback(p);
+                int stockA = getStock(p);;
 
                 GSM.add(ChatColor.RED + " ", i);
                 i--;
-                GSM.add(ChatColor.GRAY  + "" + aname, i);
+                GSM.add(ChatColor.GRAY  + "" + p.getName(), i);
                 i--;
                 GSM.add(ChatColor.GREEN + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stockA, i);
                 i--;

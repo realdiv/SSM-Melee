@@ -17,6 +17,7 @@ import java.util.HashMap;
 
 import static us.davidiv.Smash.SSMMelee.Game.GameStart.getGame;
 import static us.davidiv.Smash.SSMMelee.Game.GameStart.setGame;
+import static us.davidiv.Smash.SSMMelee.Game.Knockback.setKnockback;
 import static us.davidiv.Smash.SSMMelee.Game.Stock.getStock;
 import static us.davidiv.Smash.SSMMelee.Game.Stock.setStock;
 
@@ -36,12 +37,14 @@ public class Game implements Listener {
 
         int size = alive.size();
         if (size != 1) {return;}
-        for (Player player : alive.keySet()) {
-            if (getStock(player) <= 0) {return;}
 
-            String name = player.getName();
-            Bukkit.broadcastMessage(ChatColor.AQUA + "" + name + " has won the game!");
+        for (Player p : alive.keySet()) {
+
+            if (getStock(p) <= 0) {return;}
+
+            Bukkit.broadcastMessage(ChatColor.AQUA + "" + p.getName() + " has won the game!");
             setGame(false);
+
         }
 
         if (getGame()) {return;}
@@ -51,12 +54,22 @@ public class Game implements Listener {
             p.teleport(new Location(Bukkit.getWorld("HyruleCastle"), -27.5, 30.0, 19.5));
             p.setAllowFlight(false);
             p.setFlying(false);
-            Knockback.knockback.put(p, 0);
+            setKnockback(p, 0);
             setStock(p, 0);
             GSM.reset();
             GSM.send(p);
             p.sendRawMessage(ChatColor.GREEN + "Thank you for playing the test version of SSM Melee!");
         }
     }
+
+    public static Boolean getLiving(Player p) {
+        return alive.get(p);
+    }
+
+    public static void setLiving(Player p, Boolean life) {
+        if (life) alive.put(p, life);
+        else if (!life) alive.remove(p);
+    }
+
 
 }

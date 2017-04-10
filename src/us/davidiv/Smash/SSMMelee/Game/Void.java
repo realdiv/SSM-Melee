@@ -10,6 +10,8 @@ import us.davidiv.Smash.SSMMelee.Events.UpdateEvent;
 import us.davidiv.Smash.SSMMelee.Events.UpdateType;
 import us.davidiv.Smash.SSMMelee.SmashMelee;
 
+import static us.davidiv.Smash.SSMMelee.Game.GameStart.getGame;
+
 public class Void implements Listener {
     public Void(SmashMelee plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -26,10 +28,11 @@ public class Void implements Listener {
 
     @EventHandler
     public void VoidBorder(UpdateEvent e) {
-        Boolean gameActive = Game.game.get("Game");
 
         if (e.getType() != UpdateType.TICK) {return;}
-        if (!gameActive) {return;}
+
+        if (!getGame()) {return;}
+
         for (Player p : Bukkit.getOnlinePlayers()) {
             World world = Bukkit.getServer().getWorld("HyruleCastle");
             if (p.getWorld() == world && !p.isDead() && p.getGameMode() != GameMode.SPECTATOR) {

@@ -11,6 +11,10 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 import us.davidiv.Smash.SSMMelee.SmashMelee;
 
+import static us.davidiv.Smash.SSMMelee.Game.GameStart.getGame;
+import static us.davidiv.Smash.SSMMelee.Game.Knockback.getKnockback;
+import static us.davidiv.Smash.SSMMelee.Game.Stock.getStock;
+
 public class GameScoreboard implements Listener {
     public GameScoreboard(SmashMelee plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -26,12 +30,10 @@ public class GameScoreboard implements Listener {
     private static String stockC;
 
     public static void updateSmashScoreboard() {
-        Boolean gameActive = Game.game.get("Game");
-        if (gameActive) {
+        if (getGame()) {
             for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-                String aname = player.getName();
-                stock = Stock.stock.get(player);
-                kb = Knockback.knockback.get(player);
+                stock = getStock(player);
+                kb = getKnockback(player);
                 if (stock == 4) {
                     stockC = ("••••");
                 }
@@ -49,7 +51,7 @@ public class GameScoreboard implements Listener {
                 }
                 GSM.add(ChatColor.RED + " ", i);
                 i--;
-                GSM.add(ChatColor.GRAY + "" + aname, i);
+                GSM.add(ChatColor.GRAY + "" + player.getName(), i);
                 i--;
 
                 //4 STOCK

@@ -13,6 +13,8 @@ import us.davidiv.Smash.SSMMelee.Kit.Slime.*;
 import us.davidiv.Smash.SSMMelee.Kit.Spider.Needler;
 import us.davidiv.Smash.SSMMelee.Kit.Spider.SpiderLeap;
 
+import static us.davidiv.Smash.SSMMelee.Game.GameStart.setGame;
+
 public class SmashMelee extends JavaPlugin {
 
     private static Plugin plugin;
@@ -55,7 +57,7 @@ public class SmashMelee extends JavaPlugin {
         getCommand("stock").setExecutor(new GameStart(this));
         getCommand("kit").setExecutor(new KitCommand(this));
 
-        Game.game.put("Game", false);
+        setGame(false);
 
     }
 
