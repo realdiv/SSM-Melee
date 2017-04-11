@@ -1,6 +1,5 @@
 package us.davidiv.Smash.SSMMelee.Kit.Slime;
 
-import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
@@ -13,7 +12,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import us.davidiv.Smash.SSMMelee.Events.UpdateEvent;
 import us.davidiv.Smash.SSMMelee.Events.UpdateType;
-import us.davidiv.Smash.SSMMelee.Game.Kit;
 import us.davidiv.Smash.SSMMelee.Kit.Kits;
 import us.davidiv.Smash.SSMMelee.SmashMelee;
 
@@ -21,13 +19,14 @@ import java.util.HashMap;
 
 import static me.libraryaddict.disguise.DisguiseAPI.disguiseEntity;
 import static me.libraryaddict.disguise.DisguiseAPI.getDisguise;
+import static us.davidiv.Smash.SSMMelee.Game.Kit.getKit;
+import static us.davidiv.Smash.SSMMelee.Game.Kit.hasKit;
 
 public class Grow implements Listener {
     public Grow(SmashMelee plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    private DisguiseAPI ds;
     private HashMap<Player, Integer>siz = new HashMap<Player, Integer>();
 
     @EventHandler
@@ -36,9 +35,8 @@ public class Grow implements Listener {
         if (e.getType() != UpdateType.TICK) {return;}
 
         for (Player p : Bukkit.getOnlinePlayers()) {
-            Kits kitP = Kit.kit.get(p);
 
-            if (kitP != Kits.SLIME) {return;}
+            if (getKit(p) != Kits.SLIME) {return;}
 
             if (p.getExp() < .999 && !p.isDead() && p.getGameMode() == GameMode.SURVIVAL) p.setExp((p.getExp() + .01f));
 
@@ -50,9 +48,8 @@ public class Grow implements Listener {
         if (e.getType() != UpdateType.HALF) {return;}
 
         for (Player p : Bukkit.getOnlinePlayers()) {
-            Kits kitP = Kit.kit.get(p);
 
-            if (kitP != Kits.SLIME) {return;}
+            if (getKit(p) != Kits.SLIME) {return;}
 
             int size = 1;
             if (p.getExp() > 0.8) size = 3;
@@ -67,14 +64,12 @@ public class Grow implements Listener {
 
         for (Player p : Bukkit.getOnlinePlayers()) {
 
-            if (!Kit.kit.containsKey(p))  {return;}
-            Kits kitP = Kit.kit.get(p);
+            if (!hasKit(p))  {return;}
 
-            if (kitP != Kits.SLIME) {return;}
+            if (getKit(p) != Kits.SLIME) {return;}
             Boolean magmacube = Overheat.overheat.get(p);
             if(!siz.containsKey(p)) {return;}
             int s = siz.get(p);
-
 
             MobDisguise magmamob = new MobDisguise(DisguiseType.MAGMA_CUBE);
             SlimeWatcher magma = (SlimeWatcher) magmamob.getWatcher();
@@ -105,9 +100,8 @@ public class Grow implements Listener {
         if (e.getType() != UpdateType.TICK) {return;}
 
         for (Player p : Bukkit.getOnlinePlayers()) {
-            Kits kitP = Kit.kit.get(p);
 
-            if (kitP != Kits.SLIME) {return;}
+            if (getKit(p) != Kits.SLIME) {return;}
 
             int s = siz.get(p);
 
@@ -126,8 +120,7 @@ public class Grow implements Listener {
     @EventHandler
     public void resetExp(PlayerDeathEvent e) {
         Player p = (Player) e.getEntity();
-        Kits kitP = Kit.kit.get(p);
-        if (kitP == Kits.SLIME) {
+        if (getKit(p) == Kits.SLIME) {
             p.setExp(0);
         }
     }

@@ -1,27 +1,26 @@
 package us.davidiv.Smash.SSMMelee.Kit.Slime;
 
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.MagmaCube;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Slime;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
-import us.davidiv.Smash.SSMMelee.Game.Kit;
+import us.davidiv.Smash.SSMMelee.Events.UpdateEvent;
+import us.davidiv.Smash.SSMMelee.Events.UpdateType;
 import us.davidiv.Smash.SSMMelee.Game.Knockback;
 import us.davidiv.Smash.SSMMelee.Kit.Kits;
 import us.davidiv.Smash.SSMMelee.SmashMelee;
 
 import static us.davidiv.Smash.SSMMelee.Game.GameScoreboard.updateSmashScoreboard;
+import static us.davidiv.Smash.SSMMelee.Game.Kit.getKit;
 
 /*
 Slime Rocket rip-off xD!
  */
+
+//recreate with updateevent
 
 public class SlimeToss implements Listener {
     public SlimeToss(SmashMelee plugin) {
@@ -54,19 +53,17 @@ public class SlimeToss implements Listener {
     //TODO MAKE KNOCKBACK BASED OFF OF SIZE
     //TODO ADD METHOD FOR MAGMA CUBES
 
-    @EventHandler
+    /*@EventHandler
     public void SlimeToss(PlayerInteractEvent e) {
         Player p = e.getPlayer();
-        Kits kitName = Kit.kit.get(p);
-        if (kitName == Kits.SLIME) {
+        if (getKit(p) == Kits.SLIME) {
             ItemStack i = e.getPlayer().getItemInHand();
             if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 if (i.getType() != null && i.getType() == Material.IRON_SWORD) {
                     new BukkitRunnable() {
                         public void run() {
-                            Kits kitName = Kit.kit.get(p);
                             Boolean magmacube = Overheat.overheat.get(p);
-                            if (kitName != Kits.SLIME) {
+                            if (getKit(p) != Kits.SLIME) {
                                 cancel();
                             }
                             if (p.isBlocking()) {
@@ -148,6 +145,23 @@ public class SlimeToss implements Listener {
                 }
             }
         }
+    }*/
+
+    @EventHandler
+    public void charge(UpdateEvent e) {
+
+        if (e.getType() != UpdateType.TICK) {return;}
+
+        for (Player p : Bukkit.getOnlinePlayers()) {
+
+            if (getKit(p) != Kits.SLIME) {return;}
+
+            if (!p.isBlocking()) {return;}
+
+
+
+        }
+
     }
 
 }
