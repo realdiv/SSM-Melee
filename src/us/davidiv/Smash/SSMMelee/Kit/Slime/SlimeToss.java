@@ -57,11 +57,11 @@ public class SlimeToss implements Listener {
 
             if (getKit(p) != Kits.SLIME) {continue;}
 
-            if (!p.isBlocking()) {
+            if (!p.isBlocking() || p.getExp() < 0.01f) {
                 setcharge.put(p, getCharge(p));
                 charge.remove(p);
                 rc.remove(p);
-                return;
+                continue;
             }
 
             p.setExp((p.getExp() - .02f));
@@ -72,7 +72,6 @@ public class SlimeToss implements Listener {
                 setcharge.put(p, getCharge(p));
                 charge.remove(p);
                 rc.remove(p);
-                return;
             }
         }
     }
@@ -88,11 +87,11 @@ public class SlimeToss implements Listener {
 
             if (getKit(p) != Kits.SLIME) {continue;}
 
-            int exp = setcharge.get(p);
+            int energy = setcharge.get(p);
 
-            if (exp > 80) tossSlime(p, 3, 4.0);
-            else if (exp > 40) tossSlime(p, 2, 3.0);
-            else if (exp > 1) tossSlime(p, 1, 2.0);
+            if (energy > 80) tossSlime(p, 3, 4.0);
+            else if (energy > 40) tossSlime(p, 2, 3.0);
+            else if (energy > 1) tossSlime(p, 1, 2.0);
 
             setcharge.remove(p);
 

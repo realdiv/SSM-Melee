@@ -15,6 +15,7 @@ import us.davidiv.Smash.SSMMelee.SmashMelee;
 import java.util.HashMap;
 
 import static us.davidiv.Smash.SSMMelee.Game.GameStart.getGame;
+import static us.davidiv.Smash.SSMMelee.Utils.UtilKnockback.meleeKnockback;
 
 public class Knockback implements Listener {
     public Knockback(SmashMelee plugin) {
@@ -42,7 +43,7 @@ public class Knockback implements Listener {
         e.setDamage(0);
         e.setCancelled(true);
 
-        p.setVelocity(d.getLocation().getDirection().multiply((kb / 100) + 1));
+        meleeKnockback(p, d);
     }
 
     @EventHandler
