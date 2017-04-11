@@ -66,7 +66,7 @@ public class Grow implements Listener {
 
             if (getKit(p) != Kits.SLIME) {continue;}
             Boolean magmacube = Overheat.overheat.get(p);
-            if(!siz.containsKey(p)) {return;}
+            if(!siz.containsKey(p)) {continue;}
             int s = siz.get(p);
 
             MobDisguise magmamob = new MobDisguise(DisguiseType.MAGMA_CUBE);
