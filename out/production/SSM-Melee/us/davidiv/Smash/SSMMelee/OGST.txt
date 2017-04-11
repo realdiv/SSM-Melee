@@ -1,0 +1,93 @@
+    /*@EventHandler
+    public void SlimeToss(PlayerInteractEvent e) {
+        Player p = e.getPlayer();
+        if (getKit(p) == Kits.SLIME) {
+            ItemStack i = e.getPlayer().getItemInHand();
+            if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                if (i.getType() != null && i.getType() == Material.IRON_SWORD) {
+                    new BukkitRunnable() {
+                        public void run() {
+                            Boolean magmacube = Overheat.overheat.get(p);
+                            if (getKit(p) != Kits.SLIME) {
+                                cancel();
+                            }
+                            if (p.isBlocking()) {
+                                p.setExp((p.getExp() - .02f));
+                                l++;
+                                if (magmacube) {
+                                    p.getWorld().playSound(p.getLocation(), Sound.MAGMACUBE_WALK, 0.5f, (float) (0.5 + 1.5 * ((l / 20) / 3d)));
+                                } else {
+                                    p.getWorld().playSound(p.getLocation(), Sound.SLIME_WALK, 0.5f, (float) (0.5 + 1.5 * ((l / 20) / 3d)));
+                                }
+                                exp = exp - .01;
+                                if (exp < 0.01) {
+                                    if (magmacube) {
+                                        Slime slime = p.getWorld().spawn(p.getLocation(), MagmaCube.class);
+                                        slime.setSize(3);
+                                        slime.setVelocity(p.getLocation().getDirection().multiply(4));
+                                        cancel();
+                                    } else {
+                                        Slime slime = p.getWorld().spawn(p.getLocation(), Slime.class);
+                                        slime.setSize(3);
+                                        slime.setVelocity(p.getLocation().getDirection().multiply(4));
+                                        cancel();
+                                        thrown(p, slime);
+                                    }
+                                }
+                            }
+
+
+                            if (!p.isBlocking() || p.getExp() < 0.01) {
+                                if (magmacube) {
+                                    if (exp < 0.2) {
+                                        Slime slime = p.getWorld().spawn(p.getLocation(), MagmaCube.class);
+                                        slime.setSize(3);
+                                        slime.setVelocity(p.getLocation().getDirection().multiply(4));
+                                        cancel();
+                                    } else if (exp < 0.5) {
+                                        Slime slime = p.getWorld().spawn(p.getLocation(), MagmaCube.class);
+                                        slime.setSize(2);
+                                        slime.setVelocity(p.getLocation().getDirection().multiply(4));
+                                        cancel();
+                                    } else if (exp < 0.999) {
+                                        Slime slime = p.getWorld().spawn(p.getLocation(), MagmaCube.class);
+                                        slime.setSize(1);
+                                        slime.setVelocity(p.getLocation().getDirection().multiply(4));
+                                        cancel();
+                                    }
+                                } else {
+                                    if (exp < 0.2) {
+                                        Slime slime = p.getWorld().spawn(p.getLocation(), Slime.class);
+                                        slime.setSize(3);
+                                        slime.setVelocity(p.getLocation().getDirection().multiply(4));
+                                        cancel();
+                                        thrown(p, slime);
+                                    } else if (exp < 0.5) {
+                                        Slime slime = p.getWorld().spawn(p.getLocation(), Slime.class);
+                                        slime.setSize(2);
+                                        slime.setVelocity(p.getLocation().getDirection().multiply(4));
+                                        cancel();
+                                        thrown(p, slime);
+                                    } else if (exp < 0.999) {
+                                        Slime slime = p.getWorld().spawn(p.getLocation(), Slime.class);
+                                        slime.setSize(1);
+                                        slime.setVelocity(p.getLocation().getDirection().multiply(4));
+                                        cancel();
+                                        thrown(p, slime);
+                                    }
+                                }
+
+                                cancel();
+                            }
+
+
+                        }
+                    }.runTaskTimer((SmashMelee.getPlugin()), 0L, 1L);
+                    exp = 0.999;
+                    l = 0;
+                    //for () For loop for a Bukkit Runnable FOR each Slime : (
+                    //This will be aids!
+                }
+            }
+        }
+    }*/
