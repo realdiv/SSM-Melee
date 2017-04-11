@@ -1,6 +1,5 @@
 package us.davidiv.Smash.SSMMelee.Kit.Slime;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
@@ -54,16 +53,14 @@ public class SlimeToss implements Listener {
 
         if (e.getType() != UpdateType.TICK) {return;}
 
-        for (Player p : Bukkit.getOnlinePlayers()) {
+        for (Player p : rc.keySet()) {
 
-            if (!rc.get(p)) {return;}
-
-            if (getKit(p) != Kits.SLIME) {return;}
+            if (getKit(p) != Kits.SLIME) {continue;}
 
             if (!p.isBlocking()) {
                 setcharge.put(p, getCharge(p));
                 charge.remove(p);
-                rc.put(p, false);
+                rc.remove(p);
                 return;
             }
 
@@ -74,7 +71,7 @@ public class SlimeToss implements Listener {
             if (getCharge(p) > 98) {
                 setcharge.put(p, getCharge(p));
                 charge.remove(p);
-                rc.put(p, false);
+                rc.remove(p);
                 return;
             }
         }
@@ -85,28 +82,24 @@ public class SlimeToss implements Listener {
 
         if (e.getType() != UpdateType.TICK) {return;}
 
-        for (Player p : Bukkit.getOnlinePlayers()) {
+        for (Player p : setcharge.keySet()) {
 
-            if (!setcharge.containsKey(p)) {return;}
-            if (setcharge.get(p) <= 0) {return;}
+            if (setcharge.get(p) <= 0) {continue;}
 
-            if (getKit(p) != Kits.SLIME) {return;}
+            if (getKit(p) != Kits.SLIME) {continue;}
 
             int exp = setcharge.get(p);
 
+            if (exp > 80) tossSlime(p, 3, 4.0);
+            else if (exp > 40) tossSlime(p, 2, 3.0);
+            else if (exp > 1) tossSlime(p, 1, 2.0);
+
             setcharge.remove(p);
 
-            if (exp > 80) tossSlime(p, 3);
-            else if (exp > 40) tossSlime(p, 2);
-            else if (exp > 1) tossSlime(p, 1);
-
-            return;
-
         }
-
     }
 
-    public void thrown(Player p, Slime slime) {
+    private void thrown(Player p, Slime slime) {
         new BukkitRunnable() {
             public void run() {
                 if (slime.isOnGround()) { cancel(); }
@@ -128,10 +121,10 @@ public class SlimeToss implements Listener {
     //TODO MAKE KNOCKBACK BASED OFF OF SIZE
     //TODO ADD METHOD FOR MAGMA CUBES
 
-    private void tossSlime(Player p, Integer size) {
+    private void tossSlime(Player p, Integer size, Double speed) {
         Slime slime = p.getWorld().spawn(p.getLocation().setDirection(p.getLocation().getDirection()), Slime.class);
         slime.setSize(size);
-        slime.setVelocity(p.getLocation().getDirection().multiply(4));
+        slime.setVelocity(p.getLocation().getDirection().multiply(speed));
         thrown(p, slime);
     }
 

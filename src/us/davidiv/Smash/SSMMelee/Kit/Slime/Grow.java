@@ -19,8 +19,7 @@ import java.util.HashMap;
 
 import static me.libraryaddict.disguise.DisguiseAPI.disguiseEntity;
 import static me.libraryaddict.disguise.DisguiseAPI.getDisguise;
-import static us.davidiv.Smash.SSMMelee.Game.Kit.getKit;
-import static us.davidiv.Smash.SSMMelee.Game.Kit.hasKit;
+import static us.davidiv.Smash.SSMMelee.Game.Kit.*;
 
 public class Grow implements Listener {
     public Grow(SmashMelee plugin) {
@@ -34,12 +33,11 @@ public class Grow implements Listener {
 
         if (e.getType() != UpdateType.TICK) {return;}
 
-        for (Player p : Bukkit.getOnlinePlayers()) {
+        for (Player p : kit.keySet()) {
 
-            if (getKit(p) != Kits.SLIME) {return;}
+            if (getKit(p) != Kits.SLIME) {continue;}
 
             if (p.getExp() < .999 && !p.isDead() && p.getGameMode() == GameMode.SURVIVAL) p.setExp((p.getExp() + .01f));
-
         }
     }
 
@@ -49,7 +47,7 @@ public class Grow implements Listener {
 
         for (Player p : Bukkit.getOnlinePlayers()) {
 
-            if (getKit(p) != Kits.SLIME) {return;}
+            if (getKit(p) != Kits.SLIME) {continue;}
 
             int size = 1;
             if (p.getExp() > 0.8) size = 3;
@@ -64,9 +62,9 @@ public class Grow implements Listener {
 
         for (Player p : Bukkit.getOnlinePlayers()) {
 
-            if (!hasKit(p))  {return;}
+            if (!hasKit(p))  {continue;}
 
-            if (getKit(p) != Kits.SLIME) {return;}
+            if (getKit(p) != Kits.SLIME) {continue;}
             Boolean magmacube = Overheat.overheat.get(p);
             if(!siz.containsKey(p)) {return;}
             int s = siz.get(p);
@@ -101,7 +99,7 @@ public class Grow implements Listener {
 
         for (Player p : Bukkit.getOnlinePlayers()) {
 
-            if (getKit(p) != Kits.SLIME) {return;}
+            if (getKit(p) != Kits.SLIME) {continue;}
 
             int s = siz.get(p);
 
