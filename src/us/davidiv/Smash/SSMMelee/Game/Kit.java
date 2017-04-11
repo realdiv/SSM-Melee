@@ -37,7 +37,7 @@ public class Kit {
 
     public static Boolean hasKit(Player p) {
         if (kit.containsKey(p)) return true;
-        if (!kit.containsKey(p)) return true;
+        if (!kit.containsKey(p)) return false;
         return null;
     }
 
