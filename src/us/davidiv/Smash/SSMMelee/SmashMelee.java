@@ -29,6 +29,7 @@ public class SmashMelee extends JavaPlugin {
         //Random
         new JoinMessage(this);
         new BlockProtection(this);
+        new StockCommand(this);
 
         //Game Mechanics
         new DoubleJump(this);
@@ -54,7 +55,7 @@ public class SmashMelee extends JavaPlugin {
 
         getCommand("gamestart").setExecutor(new GameStart(this));
         getCommand("gamestop").setExecutor(new GameStart(this));
-        getCommand("stock").setExecutor(new GameStart(this));
+        getCommand("stock").setExecutor(new StockCommand(this));
         getCommand("kit").setExecutor(new KitCommand(this));
 
         setGame(false);

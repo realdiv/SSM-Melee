@@ -34,25 +34,46 @@ public class GameScoreboard implements Listener {
             for (Player player : Bukkit.getServer().getOnlinePlayers()) {
                 stock = getStock(player);
                 kb = getKnockback(player);
-                if (stock == 4) {
+                if (stock > 4) {
+                    stockC = (getStock(player).toString());
+                }
+                else if (stock == 4) {
                     stockC = ("••••");
                 }
-                if (stock == 3) {
+                else if (stock == 3) {
                     stockC = ("•••");
                 }
-                if (stock == 2) {
+                else if (stock == 2) {
                     stockC = ("••");
                 }
-                if (stock == 1) {
+                else if (stock == 1) {
                     stockC = ("•");
                 }
-                if (stock == 0) {
+                else if (stock == 0) {
                     stockC = "";
                 }
                 GSM.add(ChatColor.RED + " ", i);
                 i--;
                 GSM.add(ChatColor.GRAY + "" + player.getName(), i);
                 i--;
+
+                //>4 STOCK
+                if (kb < 100 && stock > 4) {
+                    GSM.add(ChatColor.GREEN + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stockC, i);
+                }
+                if (kb > 99 && kb < 200 && stock > 4) {
+                    GSM.add(ChatColor.YELLOW + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stockC, i);
+                }
+                if (kb > 199 && kb < 300 && stock > 4) {
+                    GSM.add(ChatColor.GOLD + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stockC, i);
+                }
+                if (kb > 299 && kb < 600 && stock > 4) {
+                    GSM.add(ChatColor.RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stockC, i);
+                }
+                if (kb > 599 && stock > 4) {
+                    GSM.add(ChatColor.DARK_RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stockC, i);
+                }
+
 
                 //4 STOCK
 

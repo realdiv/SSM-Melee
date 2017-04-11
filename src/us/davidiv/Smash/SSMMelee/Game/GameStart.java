@@ -1,7 +1,6 @@
 package us.davidiv.Smash.SSMMelee.Game;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,9 +12,8 @@ import org.bukkit.scoreboard.Team;
 import us.davidiv.Smash.SSMMelee.SmashMelee;
 
 import static us.davidiv.Smash.SSMMelee.Game.Game.setLiving;
-import static us.davidiv.Smash.SSMMelee.Game.Knockback.getKnockback;
+import static us.davidiv.Smash.SSMMelee.Game.GameScoreboard.updateSmashScoreboard;
 import static us.davidiv.Smash.SSMMelee.Game.Knockback.setKnockback;
-import static us.davidiv.Smash.SSMMelee.Game.Stock.getStock;
 import static us.davidiv.Smash.SSMMelee.Game.Stock.setStock;
 
 
@@ -45,38 +43,7 @@ public class GameStart implements CommandExecutor, Listener {
                     setStock(player, 4);
                     setLiving(player, true);
                 }
-                for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-                    int kb = getKnockback(player);
-                    int stockA = getStock(player);
-                    if (stockA == 4) {
-                        stockC = ("••••");
-                    }
-                    if (stockA == 3) {
-                        stockC = ("•••");
-                    }
-                    if (stockA == 2) {
-                        stockC = ("••");
-                    }
-                    if (stockA == 1) {
-                        stockC = ("•");
-                    }
-                    if (stockA == 0) {
-                        stockC = "";
-                    }
-
-
-                    GSM.add(ChatColor.RED + " ", i);
-                    i--;
-                    GSM.add(ChatColor.GRAY  + "" + player.getName(), i);
-                    i--;
-                    GSM.add(ChatColor.GREEN + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stockC, i);
-                    i--;
-                    GSM.add(ChatColor.RED + "&4", i);
-                    i--;
-                    GSM.send(player);
-                    GSM.update();
-                }
-                i = 16;
+                updateSmashScoreboard();
             }
 
             if (cmd.getName().contentEquals("gamestop")) {
@@ -91,24 +58,6 @@ public class GameStart implements CommandExecutor, Listener {
                     GSM.reset();
                     GSM.send(player);
                 }
-            }
-            if (cmd.getName().contentEquals("stock")) {
-                Player p = ((Player) sender).getPlayer();
-                setKnockback(p, 1041);
-                setStock(p, 2);
-                int kb = getKnockback(p);
-                int stockA = getStock(p);;
-
-                GSM.add(ChatColor.RED + " ", i);
-                i--;
-                GSM.add(ChatColor.GRAY  + "" + p.getName(), i);
-                i--;
-                GSM.add(ChatColor.GREEN + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.GREEN + stockA, i);
-                i--;
-                GSM.add(ChatColor.RED + "&4", i);
-                i--;
-                GSM.update();
-                GSM.send(p);
             }
         }
         return true;

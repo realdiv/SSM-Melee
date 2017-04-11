@@ -28,7 +28,7 @@ public class Stock implements Listener {
         if (getStock(p) == null || getStock(p) <= 0) {return;}
         addStock(p, -1);
 
-        if (getStock(p) > 0) respawn(p);
+        if (getStock(p) > 0) {respawn(p);}
         else {setLiving(p, false);}
     }
 
@@ -37,7 +37,7 @@ public class Stock implements Listener {
     }
 
     public static void addStock(Player p, Integer add) {
-        setStock(p, (getStock(p) + add));
+        stock.put(p, (stock.get(p) + add));
     }
 
     public static void setStock(Player p, Integer amount) {

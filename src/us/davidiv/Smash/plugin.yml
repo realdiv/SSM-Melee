@@ -8,6 +8,6 @@ commands:
   gamestop:
     description: stops the game
   stock:
-    description: debug
+    description: set stock
   kit:
     description: sets your kit

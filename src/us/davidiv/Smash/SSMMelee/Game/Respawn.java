@@ -22,13 +22,14 @@ public class Respawn implements Listener {
     private static HashMap<Player, Integer> time = new HashMap<>();
 
     public static void respawn(Player p) {
+        p.setGameMode(GameMode.SPECTATOR);
+
         setRespawnTime(p, 5);
-        p.setHealth(20.0);
         p.teleport(new Location(Bukkit.getWorld("HyruleCastle"), -27.5, 30.0, 19.5));
+        p.setHealth(20.0);
 
         timer(p);
 
-        p.setGameMode(GameMode.SPECTATOR);
         new BukkitRunnable() {
             public void run() {
                 timer(p);
@@ -43,10 +44,9 @@ public class Respawn implements Listener {
     }
 
     private static void revive(Player p) {
-        p.setGameMode(GameMode.SURVIVAL);
-
         //tp to spawnpoint of map
         p.teleport(new Location(Bukkit.getWorld("HyruleCastle"), -27.5, 30.0, 19.5));
+        p.setGameMode(GameMode.SURVIVAL);
 
         p.setAllowFlight(false);
         p.setFlying(false);
@@ -63,7 +63,7 @@ public class Respawn implements Listener {
     }
 
     private static void addRespawnTime(Player p, Integer add) {
-        setRespawnTime(p, (getRespawnTime(p) + add));
+        time.put(p, (time.get(p) + add));
     }
 
     private static void setRespawnTime(Player p, Integer seoonds) {
