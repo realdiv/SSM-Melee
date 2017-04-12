@@ -1,5 +1,6 @@
 package us.davidiv.Smash.SSMMelee.Kit.Slime;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
@@ -10,10 +11,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 import us.davidiv.Smash.SSMMelee.Events.UpdateEvent;
 import us.davidiv.Smash.SSMMelee.Events.UpdateType;
-import us.davidiv.Smash.SSMMelee.Game.Knockback;
 import us.davidiv.Smash.SSMMelee.Kit.Kits;
 import us.davidiv.Smash.SSMMelee.SmashMelee;
 
@@ -32,6 +31,9 @@ public class SlimeToss implements Listener {
     private HashMap<Player, Boolean>rc = new HashMap<>();
     private HashMap<Player, Integer>charge = new HashMap<>();
     private HashMap<Player, Integer>setcharge = new HashMap<>();
+
+    private HashMap<Slime, Player>tossEntity = new HashMap<>();
+
 
     //Initial right-click activation
 
@@ -94,9 +96,9 @@ public class SlimeToss implements Listener {
 
             int energy = setcharge.get(p);
 
-            if (energy > 80) tossSlime(p, 3, 4.0);
-            else if (energy > 40) tossSlime(p, 2, 3.0);
-            else if (energy > 1) tossSlime(p, 1, 2.0);
+            if (energy > 80) tossSlime(p, 3, 2.5);
+            else if (energy > 40) tossSlime(p, 2, 3.5);
+            else if (energy > 1) tossSlime(p, 1, 4.0);
 
             setcharge.remove(p);
 
@@ -105,26 +107,51 @@ public class SlimeToss implements Listener {
 
     //Collisions
 
-    private void thrown(Player p, Slime slime, Integer kb) {
-        new BukkitRunnable() {
-            public void run() {
-                if (slime.isOnGround()) { cancel(); }
-                for (Entity entity : slime.getNearbyEntities(2.0, 2.0, 2.0)) {
-                    if (entity instanceof Player) {
-                        if (entity != (Entity) p) {
-                            setKnockback((Player) entity, (getKnockback((Player) entity) + (kb * 10)));
-                            entity.setVelocity(slime.getLocation().getDirection().multiply((Knockback.knockback.get((Player) entity) / 100) * 2));
-                            updateSmashScoreboard();
-                            cancel();
-                        }
-                    }
+    @EventHandler
+    public void collision(UpdateEvent e) {
+        if (e.getType() != UpdateType.TICK) {return;}
+
+        for (Slime slime : tossEntity.keySet()) {
+
+            if (slime.isOnGround()) {slimeRemove(slime); continue;}
+
+            double radius = .25;
+            if (slime.getSize() == 2) radius = .5;
+            else if (slime.getSize() == 3) radius = .90;
+
+            for (Entity entity : slime.getNearbyEntities(radius, radius, radius)) {
+
+                if (entity instanceof Player) {
+
+                    if (entity == (Entity) tossEntity.get(slime)) {continue;}
+
+                    setKnockback((Player) entity, (getKnockback((Player) entity) + (slime.getSize() * 10)));
+
+                    entity.setVelocity(slime.getVelocity().multiply((getKnockback((Player) entity) / 100) * (slime.getSize()/2) + 1));
+
+                    updateSmashScoreboard();
+
+                    tossEntity.remove(slime);
                 }
             }
-        }.runTaskTimer(SmashMelee.getPlugin(), 0L, 1L);
+        }
     }
 
-    //TODO MAKE VELOCITY BASED OFF OF SLIME VELOCITY DIRECTION (?)
-    //TODO MAKE KNOCKBACK BASED OFF OF SIZE
+    private void thrown(Player p, Slime slime) {
+        tossEntity.put(slime, p);
+    }
+
+    public void slimeRemove(Slime slime) {
+        Bukkit.getScheduler().runTaskLater(SmashMelee.getPlugin(), new Runnable() {
+
+            @Override
+            public void run() {
+                slime.setHealth(0.0);
+                tossEntity.remove(slime);
+            }
+        }, 80L);
+    }
+
     //TODO ADD METHOD FOR MAGMA CUBES
 
     //Slime entity method
@@ -134,7 +161,7 @@ public class SlimeToss implements Listener {
         slime.setSize(size);
         slime.setVelocity(p.getLocation().getDirection().multiply(speed));
         int x = (int) speed;
-        thrown(p, slime, x);
+        thrown(p, slime);
     }
 
     private void addCharge(Player p, Integer add) {

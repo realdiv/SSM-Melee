@@ -17,6 +17,7 @@ public class MapDestruction {
 
     public static void burn(Player p, Integer spread) {
         Location loc = p.getLocation();
+
     }
 
 }

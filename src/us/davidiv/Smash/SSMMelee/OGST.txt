@@ -91,3 +91,21 @@
             }
         }
     }*/
+
+        /*private void thrown(Player p, Slime slime, Integer kb) {
+            new BukkitRunnable() {
+                public void run() {
+                    if (slime.isOnGround()) { cancel(); }
+                    for (Entity entity : slime.getNearbyEntities(2.0, 2.0, 2.0)) {
+                        if (entity instanceof Player) {
+                            if (entity != (Entity) p) {
+                                setKnockback((Player) entity, (getKnockback((Player) entity) + (kb * 10)));
+                                entity.setVelocity(slime.getLocation().getDirection().multiply((Knockback.knockback.get((Player) entity) / 100) * 2));
+                                updateSmashScoreboard();
+                                cancel();
+                            }
+                        }
+                    }
+                }
+            }.runTaskTimer(SmashMelee.getPlugin(), 0L, 1L);
+        }*/
