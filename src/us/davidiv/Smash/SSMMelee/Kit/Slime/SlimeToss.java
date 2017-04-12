@@ -21,18 +21,19 @@ import java.util.HashMap;
 
 import static us.davidiv.Smash.SSMMelee.Game.GameScoreboard.updateSmashScoreboard;
 import static us.davidiv.Smash.SSMMelee.Game.Kit.getKit;
+import static us.davidiv.Smash.SSMMelee.Game.Knockback.getKnockback;
+import static us.davidiv.Smash.SSMMelee.Game.Knockback.setKnockback;
 
 public class SlimeToss implements Listener {
     public SlimeToss(SmashMelee plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    private double exp = 0.999;
-    private int l = 0;
-
     private HashMap<Player, Boolean>rc = new HashMap<>();
     private HashMap<Player, Integer>charge = new HashMap<>();
     private HashMap<Player, Integer>setcharge = new HashMap<>();
+
+    //Initial right-click activation
 
     @EventHandler
     public void rightclick(PlayerInteractEvent e) {
@@ -47,6 +48,8 @@ public class SlimeToss implements Listener {
 
         rc.put(p, true);
     }
+
+    //Slime Toss charge-up
 
     @EventHandler
     public void charge(UpdateEvent e) {
@@ -76,6 +79,8 @@ public class SlimeToss implements Listener {
         }
     }
 
+    //Checks charge, tosses slime with correct size
+
     @EventHandler
     public void slimetoss(UpdateEvent e) {
 
@@ -98,14 +103,16 @@ public class SlimeToss implements Listener {
         }
     }
 
-    private void thrown(Player p, Slime slime) {
+    //Collisions
+
+    private void thrown(Player p, Slime slime, Integer kb) {
         new BukkitRunnable() {
             public void run() {
                 if (slime.isOnGround()) { cancel(); }
                 for (Entity entity : slime.getNearbyEntities(2.0, 2.0, 2.0)) {
                     if (entity instanceof Player) {
                         if (entity != (Entity) p) {
-                            Knockback.knockback.put((Player) entity, (Knockback.knockback.get((Player) entity) + 40));
+                            setKnockback((Player) entity, (getKnockback((Player) entity) + (kb * 10)));
                             entity.setVelocity(slime.getLocation().getDirection().multiply((Knockback.knockback.get((Player) entity) / 100) * 2));
                             updateSmashScoreboard();
                             cancel();
@@ -120,11 +127,14 @@ public class SlimeToss implements Listener {
     //TODO MAKE KNOCKBACK BASED OFF OF SIZE
     //TODO ADD METHOD FOR MAGMA CUBES
 
-    private void tossSlime(Player p, Integer size, Double speed) {
+    //Slime entity method
+
+    private void tossSlime(Player p, Integer size, double speed) {
         Slime slime = p.getWorld().spawn(p.getLocation().setDirection(p.getLocation().getDirection()), Slime.class);
         slime.setSize(size);
         slime.setVelocity(p.getLocation().getDirection().multiply(speed));
-        thrown(p, slime);
+        int x = (int) speed;
+        thrown(p, slime, x);
     }
 
     private void addCharge(Player p, Integer add) {
