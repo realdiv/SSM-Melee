@@ -3,9 +3,7 @@ package us.davidiv.Smash.SSMMelee.Kit.Slime;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Slime;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -22,6 +20,7 @@ import static us.davidiv.Smash.SSMMelee.Game.GameScoreboard.updateSmashScoreboar
 import static us.davidiv.Smash.SSMMelee.Game.Kit.getKit;
 import static us.davidiv.Smash.SSMMelee.Game.Knockback.getKnockback;
 import static us.davidiv.Smash.SSMMelee.Game.Knockback.setKnockback;
+import static us.davidiv.Smash.SSMMelee.Kit.Slime.Overheat.getOverheat;
 
 public class SlimeToss implements Listener {
     public SlimeToss(SmashMelee plugin) {
@@ -32,7 +31,7 @@ public class SlimeToss implements Listener {
     private HashMap<Player, Integer>charge = new HashMap<>();
     private HashMap<Player, Integer>setcharge = new HashMap<>();
 
-    private HashMap<Slime, Player>tossEntity = new HashMap<>();
+    private HashMap<Entity, Player>tossEntity = new HashMap<>();
 
 
     //Initial right-click activation
@@ -111,7 +110,9 @@ public class SlimeToss implements Listener {
     public void collision(UpdateEvent e) {
         if (e.getType() != UpdateType.TICK) {return;}
 
-        for (Slime slime : tossEntity.keySet()) {
+        for (Entity entityy : tossEntity.keySet()) {
+
+            Slime slime = (Slime) entityy;
 
             if (slime.isOnGround()) {slimeRemove(slime); continue;}
 
@@ -123,7 +124,9 @@ public class SlimeToss implements Listener {
 
                 if (entity instanceof Player) {
 
-                    if (entity == (Entity) tossEntity.get(slime)) {continue;}
+                    Player p = (Player) entity;
+
+                    if (p == tossEntity.get(slime)) {continue;}
 
                     setKnockback((Player) entity, (getKnockback((Player) entity) + (slime.getSize() * 10)));
 
@@ -137,31 +140,44 @@ public class SlimeToss implements Listener {
         }
     }
 
-    private void thrown(Player p, Slime slime) {
+    private void thrown(Player p, Entity slime) {
         tossEntity.put(slime, p);
     }
 
-    public void slimeRemove(Slime slime) {
+    private void slimeRemove(Entity slime) {
         Bukkit.getScheduler().runTaskLater(SmashMelee.getPlugin(), new Runnable() {
 
             @Override
             public void run() {
-                slime.setHealth(0.0);
+                if (slime.getType() == EntityType.SLIME) {
+                    Slime eSlime = (Slime) slime;
+                    eSlime.setHealth(0.0);
+                }
+                if (slime.getType() == EntityType.MAGMA_CUBE) {
+                    Slime eSlime = (MagmaCube) slime;
+                    eSlime.setHealth(0.0);
+                }
                 tossEntity.remove(slime);
             }
         }, 80L);
     }
 
-    //TODO ADD METHOD FOR MAGMA CUBES
-
     //Slime entity method
 
     private void tossSlime(Player p, Integer size, double speed) {
-        Slime slime = p.getWorld().spawn(p.getLocation().setDirection(p.getLocation().getDirection()), Slime.class);
-        slime.setSize(size);
-        slime.setVelocity(p.getLocation().getDirection().multiply(speed));
-        int x = (int) speed;
-        thrown(p, slime);
+        if (!getOverheat(p)) {
+            Slime slime = p.getWorld().spawn(p.getLocation().setDirection(p.getLocation().getDirection()), Slime.class);
+            slime.setSize(size);
+            slime.setVelocity(p.getLocation().getDirection().multiply(speed));
+            int x = (int) speed;
+            thrown(p, slime);
+        } else {
+            MagmaCube cube = p.getWorld().spawn(p.getLocation().setDirection(p.getLocation().getDirection()), MagmaCube.class);
+            cube.setSize(size);
+            cube.setVelocity(p.getLocation().getDirection().multiply(speed));
+            int x = (int) speed;
+            thrown(p, cube);
+        }
     }
 
     private void addCharge(Player p, Integer add) {
