@@ -3,10 +3,8 @@ version: 0.1.0.4.1
 author: Davidiv
 main: us.davidiv.Smash.SSMMelee.SmashMelee
 commands:
-  gamestart:
-    description: starts the game
-  gamestop:
-    description: stops the game
+  game:
+    description: /game <stop|start> <solo|teams>
   stock:
     description: set stock
   kit:

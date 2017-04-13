@@ -53,8 +53,7 @@ public class SmashMelee extends JavaPlugin {
         new Needler(this);
         new SpiderLeap(this);
 
-        getCommand("gamestart").setExecutor(new GameStart(this));
-        getCommand("gamestop").setExecutor(new GameStart(this));
+        getCommand("game").setExecutor(new GameStart(this));
         getCommand("stock").setExecutor(new StockCommand(this));
         getCommand("kit").setExecutor(new KitCommand(this));
 

@@ -15,8 +15,7 @@ import us.davidiv.Smash.SSMMelee.SmashMelee;
 
 import java.util.HashMap;
 
-import static us.davidiv.Smash.SSMMelee.Game.GameStart.getGame;
-import static us.davidiv.Smash.SSMMelee.Game.GameStart.setGame;
+import static us.davidiv.Smash.SSMMelee.Game.GameStart.*;
 import static us.davidiv.Smash.SSMMelee.Game.Knockback.setKnockback;
 import static us.davidiv.Smash.SSMMelee.Game.Stock.getStock;
 import static us.davidiv.Smash.SSMMelee.Game.Stock.setStock;
@@ -51,6 +50,8 @@ public class Game implements Listener {
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             p.setGameMode(GameMode.SURVIVAL);
+            if (red.contains(p)) red.remove(p);
+            if (blue.contains(p)) blue.remove(p);
             p.teleport(new Location(Bukkit.getWorld("HyruleCastle"), -27.5, 30.0, 19.5));
             p.setAllowFlight(false);
             p.setFlying(false);

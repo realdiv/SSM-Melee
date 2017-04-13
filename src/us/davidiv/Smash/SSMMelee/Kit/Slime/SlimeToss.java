@@ -95,8 +95,8 @@ public class SlimeToss implements Listener {
 
             int energy = setcharge.get(p);
 
-            if (energy > 80) tossSlime(p, 3, 2.5);
-            else if (energy > 40) tossSlime(p, 2, 3.5);
+            if (energy > 80) tossSlime(p, 3, 2.2);
+            else if (energy > 40) tossSlime(p, 2, 3.0);
             else if (energy > 1) tossSlime(p, 1, 4.0);
 
             setcharge.remove(p);
@@ -116,7 +116,7 @@ public class SlimeToss implements Listener {
 
             if (slime.isOnGround()) {slimeRemove(slime); continue;}
 
-            double radius = .25;
+            double radius = .3;
             if (slime.getSize() == 2) radius = .5;
             else if (slime.getSize() == 3) radius = .90;
 
