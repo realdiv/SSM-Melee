@@ -7,8 +7,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 import us.davidiv.Smash.SSMMelee.SmashMelee;
 
 import static us.davidiv.Smash.SSMMelee.Game.GameStart.*;
@@ -20,8 +18,6 @@ public class GameScoreboard implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    private Team team;
-    private Scoreboard board;
     private static int i = 16;
     public static GameScoreboardManager GSM = new GameScoreboardManager(org.bukkit.ChatColor.DARK_RED + "" + org.bukkit.ChatColor.BOLD + "     SSM MELEE    ");
 
@@ -32,6 +28,7 @@ public class GameScoreboard implements Listener {
     public static void updateSmashScoreboard() {
         if (getGame()) {
             if (!getTeams()) {
+                GSM.reset();
                 GSM.add(ChatColor.RED + " ", i);
                 for (Player player : Bukkit.getServer().getOnlinePlayers()) {
                     stock = getStock(player);
@@ -158,6 +155,9 @@ public class GameScoreboard implements Listener {
                 i = 16;
             }
             else if (getTeams()) {
+                GSM.reset();
+                GSM.add(ChatColor.RED + " ", i);
+                i--;
                 for (Player player : getRedTeam()) {
                     stock = getStock(player);
                     kb = getKnockback(player);
@@ -174,16 +174,12 @@ public class GameScoreboard implements Listener {
                     } else if (stock == 0) {
                         stockC = "";
                     }
-                    GSM.add(ChatColor.RED + " ", i);
-                    i--;
                     GSM.add(ChatColor.GRAY + "" + player.getName(), i);
                     i--;
                     GSM.add(ChatColor.RED + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.RED + stockC, i);
                     i--;
                     GSM.add(ChatColor.RED + "&4", i);
                     i--;
-                    GSM.send(player);
-                    GSM.update();
                 }
                 for (Player player : getBlueTeam()) {
                     stock = getStock(player);
@@ -195,21 +191,21 @@ public class GameScoreboard implements Listener {
                     } else if (stock == 3) {
                         stockC = ("•••");
                     } else if (stock == 2) {
-                        stockC = ("••");
+                            stockC = ("••");
                     } else if (stock == 1) {
                         stockC = ("•");
                     } else if (stock == 0) {
                         stockC = "";
                     }
-                    GSM.add(ChatColor.RED + " ", i);
-                    i--;
                     GSM.add(ChatColor.GRAY + "" + player.getName(), i);
                     i--;
                     GSM.add(ChatColor.BLUE + "" + kb + ChatColor.WHITE + "%" + ChatColor.WHITE + "  |  " + ChatColor.BLUE + stockC, i);
                     i--;
                     GSM.add(ChatColor.RED + "&4", i);
                     i--;
-                    GSM.send(player);
+                }
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    GSM.send(p);
                     GSM.update();
                 }
                 i = 16;

@@ -8,14 +8,13 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 import us.davidiv.Smash.SSMMelee.SmashMelee;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import static us.davidiv.Smash.SSMMelee.Game.Game.setLiving;
+import static us.davidiv.Smash.SSMMelee.Game.GameScoreboard.GSM;
 import static us.davidiv.Smash.SSMMelee.Game.GameScoreboard.updateSmashScoreboard;
 import static us.davidiv.Smash.SSMMelee.Game.Knockback.setKnockback;
 import static us.davidiv.Smash.SSMMelee.Game.Stock.setStock;
@@ -25,13 +24,6 @@ public class GameStart implements CommandExecutor, Listener {
     public GameStart(SmashMelee plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
-
-    private Team team;
-    private Scoreboard board;
-    private int i = 16;
-    private GameScoreboardManager GSM = new GameScoreboardManager(org.bukkit.ChatColor.DARK_RED + "" + org.bukkit.ChatColor.BOLD + "     SSM MELEE    ");
-
-    String stockC;
 
     private static Boolean game;
     private static Boolean teams;

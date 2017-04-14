@@ -116,8 +116,8 @@ public class SlimeToss implements Listener {
 
             if (slime.isOnGround()) {slimeRemove(slime); continue;}
 
-            double radius = .3;
-            if (slime.getSize() == 2) radius = .5;
+            double radius = .9;
+            if (slime.getSize() == 2) radius = .9;
             else if (slime.getSize() == 3) radius = .90;
 
             for (Entity entity : slime.getNearbyEntities(radius, radius, radius)) {

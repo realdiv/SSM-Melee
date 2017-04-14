@@ -8,6 +8,4 @@ public class Vortex implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-
-
 }
