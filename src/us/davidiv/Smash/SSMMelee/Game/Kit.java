@@ -13,7 +13,7 @@ public class Kit {
     public static HashMap<Player, Kits>kit  = new HashMap<Player, Kits>();
 
     public static void kitM(Player p, Kits kitName, String pName, String sName, Material primaryItem, Material secondaryItem) {
-        Kit.kit.put(p, kitName);
+        setKit(p, kitName);
         ItemStack primary = new ItemStack(primaryItem);
         ItemMeta imP = primary.getItemMeta();
         imP.setDisplayName(pName);
@@ -25,6 +25,20 @@ public class Kit {
         ItemStack cmp = new ItemStack(Material.COMPASS);
         p.getInventory().clear();
         p.getInventory().addItem(primary, secondary, cmp);
+    }
+
+    public static Kits getKit(Player p) {
+        return kit.get(p);
+    }
+
+    public static void setKit(Player p, Kits k) {
+        kit.put(p, k);
+    }
+
+    public static Boolean hasKit(Player p) {
+        if (kit.containsKey(p)) return true;
+        if (!kit.containsKey(p)) return false;
+        return null;
     }
 
 }

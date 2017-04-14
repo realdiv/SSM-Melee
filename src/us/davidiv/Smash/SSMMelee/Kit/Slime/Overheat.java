@@ -34,6 +34,9 @@ public class Overheat implements Listener {
         }
     }
 
+    public static Boolean getOverheat(Player p) {
+        return overheat.get(p);
+    }
 
 
 }

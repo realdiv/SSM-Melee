@@ -25,7 +25,6 @@ public class KitSpider {
         mob.setViewSelfDisguise(false);
         mob.setKeepDisguiseOnPlayerDeath(true);
         disguiseEntity(p, mob);
-        //p.sendRawMessage(msg(Message.MessageType.GAME, "you chose Spider kit!"));
     }
 
 }

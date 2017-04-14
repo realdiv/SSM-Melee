@@ -12,11 +12,12 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import us.davidiv.Smash.SSMMelee.Events.UpdateEvent;
 import us.davidiv.Smash.SSMMelee.Events.UpdateType;
-import us.davidiv.Smash.SSMMelee.Game.Kit;
 import us.davidiv.Smash.SSMMelee.Kit.Kits;
 import us.davidiv.Smash.SSMMelee.SmashMelee;
 
 import java.util.HashMap;
+
+import static us.davidiv.Smash.SSMMelee.Game.Kit.getKit;
 
 public class Needler implements Listener {
     public Needler(SmashMelee plugin) {
@@ -29,10 +30,9 @@ public class Needler implements Listener {
     public void onClick(PlayerInteractEvent e) {
 
         Player p = e.getPlayer();
-        Kits kitName = Kit.kit.get(p);
         ItemStack i = e.getPlayer().getItemInHand();
 
-        if (kitName != Kits.SPIDER) {return;}
+        if (getKit(p) != Kits.SPIDER) {return;}
 
         if (i.getType() != Material.IRON_SWORD) {return;}
 

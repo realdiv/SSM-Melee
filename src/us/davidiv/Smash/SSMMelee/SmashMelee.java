@@ -12,6 +12,9 @@ import us.davidiv.Smash.SSMMelee.Game.Void;
 import us.davidiv.Smash.SSMMelee.Kit.Slime.*;
 import us.davidiv.Smash.SSMMelee.Kit.Spider.Needler;
 import us.davidiv.Smash.SSMMelee.Kit.Spider.SpiderLeap;
+import us.davidiv.Smash.SSMMelee.Kit.Spider.Vortex;
+
+import static us.davidiv.Smash.SSMMelee.Game.GameStart.setGame;
 
 public class SmashMelee extends JavaPlugin {
 
@@ -27,6 +30,7 @@ public class SmashMelee extends JavaPlugin {
         //Random
         new JoinMessage(this);
         new BlockProtection(this);
+        new StockCommand(this);
 
         //Game Mechanics
         new DoubleJump(this);
@@ -49,13 +53,13 @@ public class SmashMelee extends JavaPlugin {
         //Spider
         new Needler(this);
         new SpiderLeap(this);
+        new Vortex(this);
 
-        getCommand("gamestart").setExecutor(new GameStart(this));
-        getCommand("gamestop").setExecutor(new GameStart(this));
-        getCommand("stock").setExecutor(new GameStart(this));
+        getCommand("game").setExecutor(new GameStart(this));
+        getCommand("stock").setExecutor(new StockCommand(this));
         getCommand("kit").setExecutor(new KitCommand(this));
 
-        Game.game.put("Game", false);
+        setGame(false);
 
     }
 
