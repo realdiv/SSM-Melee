@@ -15,6 +15,7 @@ import java.util.Random;
 
 import static us.davidiv.Smash.SSMMelee.Game.Game.setLiving;
 import static us.davidiv.Smash.SSMMelee.Game.GameScoreboard.GSM;
+import static us.davidiv.Smash.SSMMelee.Game.GameScoreboard.i;
 import static us.davidiv.Smash.SSMMelee.Game.GameScoreboard.updateSmashScoreboard;
 import static us.davidiv.Smash.SSMMelee.Game.Knockback.setKnockback;
 import static us.davidiv.Smash.SSMMelee.Game.Stock.setStock;
@@ -101,7 +102,7 @@ public class GameStart implements CommandExecutor, Listener {
         }
     }
 
-    private void gameDeactivate() {
+    public static void gameDeactivate() {
         game = false;
         teams = null;
         Bukkit.broadcastMessage("[" + ChatColor.GREEN + "SSM-Melee" + ChatColor.WHITE + "] game ended!");
@@ -112,7 +113,9 @@ public class GameStart implements CommandExecutor, Listener {
             Knockback.knockback.put(player, 0);
             setStock(player, 0);
             setLiving(player, false);
+            i = 16;
             GSM.reset();
+            GSM.update();
             GSM.send(player);
         }
     }

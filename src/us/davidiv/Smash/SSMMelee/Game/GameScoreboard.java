@@ -18,7 +18,7 @@ public class GameScoreboard implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    private static int i = 16;
+    public static int i = 16;
     public static GameScoreboardManager GSM = new GameScoreboardManager(org.bukkit.ChatColor.DARK_RED + "" + org.bukkit.ChatColor.BOLD + "     SSM MELEE    ");
 
 

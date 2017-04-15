@@ -7,5 +7,9 @@ commands:
     description: /game <stop|start> <solo|teams>
   stock:
     description: set stock
+  knockback:
+    description: set knockback
+  kb:
+    description: set knockback
   kit:
     description: sets your kit

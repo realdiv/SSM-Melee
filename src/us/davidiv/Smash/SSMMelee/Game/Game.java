@@ -4,8 +4,6 @@ package us.davidiv.Smash.SSMMelee.Game;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,9 +14,7 @@ import us.davidiv.Smash.SSMMelee.SmashMelee;
 import java.util.HashMap;
 
 import static us.davidiv.Smash.SSMMelee.Game.GameStart.*;
-import static us.davidiv.Smash.SSMMelee.Game.Knockback.setKnockback;
 import static us.davidiv.Smash.SSMMelee.Game.Stock.getStock;
-import static us.davidiv.Smash.SSMMelee.Game.Stock.setStock;
 
 public class Game implements Listener {
     public Game(SmashMelee plugin) {plugin.getServer().getPluginManager().registerEvents(this, plugin);}
@@ -47,20 +43,10 @@ public class Game implements Listener {
         }
 
         if (getGame()) {return;}
+        gameDeactivate();
 
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            p.setGameMode(GameMode.SURVIVAL);
-            if (red.contains(p)) red.remove(p);
-            if (blue.contains(p)) blue.remove(p);
-            p.teleport(new Location(Bukkit.getWorld("HyruleCastle"), -27.5, 30.0, 19.5));
-            p.setAllowFlight(false);
-            p.setFlying(false);
-            setKnockback(p, 0);
-            setStock(p, 0);
-            GSM.reset();
-            GSM.send(p);
+        for (Player p : Bukkit.getOnlinePlayers())
             p.sendRawMessage(ChatColor.GREEN + "Thank you for playing the test version of SSM Melee!");
-        }
     }
 
     public static Boolean getLiving(Player p) {

@@ -25,6 +25,7 @@ public class SmashMelee extends JavaPlugin {
         plugin = this;
         startUpdateTick();
         startUpdateHalf();
+        startUpdateDeci();
         startUpdateSecond();
 
         //Random
@@ -56,8 +57,10 @@ public class SmashMelee extends JavaPlugin {
         new Vortex(this);
 
         getCommand("game").setExecutor(new GameStart(this));
-        getCommand("stock").setExecutor(new StockCommand(this));
         getCommand("kit").setExecutor(new KitCommand(this));
+        getCommand("stock").setExecutor(new StockCommand(this));
+        getCommand("knockback").setExecutor(new KnockbackCommand(this));
+        getCommand("kb").setExecutor(new KnockbackCommand(this));
 
         setGame(false);
 
@@ -74,6 +77,15 @@ public class SmashMelee extends JavaPlugin {
                 Bukkit.getPluginManager().callEvent(new UpdateEvent(UpdateType.TICK));
             }
         }.runTaskTimer(this, 0L, 1L);
+    }
+
+    private void startUpdateDeci(){
+        BukkitTask task = new BukkitRunnable() {
+            @Override
+            public void run() {
+                Bukkit.getPluginManager().callEvent(new UpdateEvent(UpdateType.DECI));
+            }
+        }.runTaskTimer(this, 0L, 2L);
     }
 
     private void startUpdateHalf(){
