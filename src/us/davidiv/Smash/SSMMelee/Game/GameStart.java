@@ -19,6 +19,7 @@ import static us.davidiv.Smash.SSMMelee.Game.GameScoreboard.i;
 import static us.davidiv.Smash.SSMMelee.Game.GameScoreboard.updateSmashScoreboard;
 import static us.davidiv.Smash.SSMMelee.Game.Knockback.setKnockback;
 import static us.davidiv.Smash.SSMMelee.Game.Stock.setStock;
+import static us.davidiv.Smash.SSMMelee.Game.Time.setTimer;
 
 
 public class GameStart implements CommandExecutor, Listener {
@@ -67,6 +68,7 @@ public class GameStart implements CommandExecutor, Listener {
         if (t) {
             game = true;
             teams = true;
+            setTimer(true);
             Bukkit.broadcastMessage("[" + ChatColor.GREEN + "SSM-Melee" + ChatColor.WHITE + "] teams game started!");
             for (Player player : Bukkit.getOnlinePlayers()) {
                 setKnockback(player, 0);
@@ -92,6 +94,7 @@ public class GameStart implements CommandExecutor, Listener {
         if (!t) {
             game = true;
             teams = false;
+            setTimer(true);
             Bukkit.broadcastMessage("[" + ChatColor.GREEN + "SSM-Melee" + ChatColor.WHITE + "] solo game started!");
             for (Player player : Bukkit.getOnlinePlayers()) {
                 setKnockback(player, 0);
@@ -105,6 +108,7 @@ public class GameStart implements CommandExecutor, Listener {
     public static void gameDeactivate() {
         game = false;
         teams = null;
+        setTimer(false);
         Bukkit.broadcastMessage("[" + ChatColor.GREEN + "SSM-Melee" + ChatColor.WHITE + "] game ended!");
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (red.contains(player)) red.remove(player);

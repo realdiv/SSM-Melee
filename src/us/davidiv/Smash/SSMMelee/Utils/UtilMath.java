@@ -5,7 +5,7 @@ import java.text.DecimalFormat;
 public class UtilMath {
 
     public static String rt2d(Double value) {
-        DecimalFormat df = new DecimalFormat("###.##");
+        DecimalFormat df = new DecimalFormat("###.#");
         return ("" + Double.valueOf(df.format(value)));
     }
 
