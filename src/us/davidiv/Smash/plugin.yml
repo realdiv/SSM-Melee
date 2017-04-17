@@ -13,3 +13,5 @@ commands:
     description: set knockback
   kit:
     description: sets your kit
+  debugcenter:
+    description: debug

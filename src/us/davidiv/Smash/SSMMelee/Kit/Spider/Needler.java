@@ -33,18 +33,19 @@ public class Needler implements Listener {
     private HashSet<Arrow> arrows = new HashSet<Arrow>();
 
     private double needlercooldown = 2.0;
+    private int arrowcount = 8;
 
     @EventHandler
     public void cd(UpdateEvent e) {
 
-        if (e.getType() != UpdateType.DECI) {return;}
+        if (e.getType() != UpdateType.TICK) {return;}
 
         for (Player p : recharge.keySet()) {
 
             if (p.getItemInHand().getType() == Material.IRON_SWORD)
                 cooldown(p, recharge.get(p), needlercooldown, "Stinger");
 
-            recharge.put(p, (recharge.get(p) - 0.1));
+            recharge.put(p, (recharge.get(p) - 0.05));
             if (recharge.get(p) > 0) {continue;}
 
             if (p.getItemInHand().getType() == Material.IRON_SWORD)
@@ -70,7 +71,7 @@ public class Needler implements Listener {
         if(e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK){return;}
 
         recharge.put(p, needlercooldown);
-        needler.put(p, 8);
+        needler.put(p, arrowcount);
     }
 
     @EventHandler
