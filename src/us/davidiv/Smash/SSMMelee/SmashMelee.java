@@ -24,9 +24,8 @@ public class SmashMelee extends JavaPlugin {
     public void onEnable() {
         plugin = this;
         startUpdateTick();
-        startUpdateATick();
-        startUpdateHalf();
-        startUpdateDeci();
+        //startUpdateHalf();
+        //startUpdateDeci();
         startUpdateSecond();
 
         //Random
@@ -81,32 +80,23 @@ public class SmashMelee extends JavaPlugin {
         }.runTaskTimer(this, 0L, 1L);
     }
 
-    private void startUpdateATick(){
-        BukkitTask task = new BukkitRunnable() {
-            @Override
-            public void run() {
-                Bukkit.getPluginManager().callEvent(new UpdateEvent(UpdateType.ATICK));
-            }
-        }.runTaskTimerAsynchronously(this, 0L, 1L);
-    }
-
-    private void startUpdateDeci(){
+    /*private void startUpdateDeci(){
         BukkitTask task = new BukkitRunnable() {
             @Override
             public void run() {
                 Bukkit.getPluginManager().callEvent(new UpdateEvent(UpdateType.DECI));
             }
         }.runTaskTimer(this, 0L, 2L);
-    }
+    }*/
 
-    private void startUpdateHalf(){
+    /*private void startUpdateHalf(){
         BukkitTask task = new BukkitRunnable() {
             @Override
             public void run() {
                 Bukkit.getPluginManager().callEvent(new UpdateEvent(UpdateType.HALF));
             }
         }.runTaskTimer(this, 0L, 10L);
-    }
+    }*/
 
     private void startUpdateSecond(){
         BukkitTask task = new BukkitRunnable() {

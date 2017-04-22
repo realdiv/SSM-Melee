@@ -6,9 +6,32 @@ import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+
 import static us.davidiv.Smash.SSMMelee.Utils.UtilMath.rt2d;
 
 public class CooldownManager {
+
+    private HashMap<Player, Integer> player = new HashMap<>();
+    private HashMap<Integer, String> ability = new HashMap<>();
+    private HashMap<Integer, Double> time = new HashMap<>();
+    private HashMap<Player, HashMap<String, Double>> cooldown = new HashMap<>();
+    private Integer total;
+
+    public CooldownManager() {
+    }
+
+    public void register(Player p, String abilityname, Double cd) {
+        total++;
+        HashMap<String, Double> reg = new HashMap<>();
+        reg.put(abilityname, cd);
+        cooldown.put(p, reg);
+    }
+
+    public Double getTime(Player p, String ability) {
+        return time.get(player.get(p));
+    }
+
 
     public static void cooldown(Player p, Double cooldown, Double total, String ability) {
         cooldownMessage(p, cooldown, total, ability);
@@ -28,59 +51,16 @@ public class CooldownManager {
 
     private static String cooldownBar(Double time, Double total, String ability) {
         String bar;
+        String prog = "";
 
-        double percentage = ((time*100)/total);
+        double percentage = ((time * 100)/total);
+        double green = (percentage/2);
+        double red = ((100 - percentage)/2);
 
-        bar = (ability + ChatColor.GREEN + " |||||||||||||||||||||||||||||||||||||||||||||||||| " + ChatColor.WHITE + time);
-        if (percentage >= 98) bar =      (ability + ChatColor.GREEN + " |||||||||||||||||||||||||||||||||||||||||||||||||" + ChatColor.RED + "| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 96) bar = (ability + ChatColor.GREEN + " ||||||||||||||||||||||||||||||||||||||||||||||||" + ChatColor.RED + "|| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 94) bar = (ability + ChatColor.GREEN + " |||||||||||||||||||||||||||||||||||||||||||||||" + ChatColor.RED + "||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 92) bar = (ability + ChatColor.GREEN + " ||||||||||||||||||||||||||||||||||||||||||||||" + ChatColor.RED + "|||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 90) bar = (ability + ChatColor.GREEN + " |||||||||||||||||||||||||||||||||||||||||||||" + ChatColor.RED + "||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 88) bar = (ability + ChatColor.GREEN + " ||||||||||||||||||||||||||||||||||||||||||||" + ChatColor.RED + "|||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 86) bar = (ability + ChatColor.GREEN + " |||||||||||||||||||||||||||||||||||||||||||" + ChatColor.RED + "||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 84) bar = (ability + ChatColor.GREEN + " ||||||||||||||||||||||||||||||||||||||||||" + ChatColor.RED + "|||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 82) bar = (ability + ChatColor.GREEN + " |||||||||||||||||||||||||||||||||||||||||" + ChatColor.RED + "||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 80) bar = (ability + ChatColor.GREEN + " ||||||||||||||||||||||||||||||||||||||||" + ChatColor.RED + "|||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 78) bar = (ability + ChatColor.GREEN + " |||||||||||||||||||||||||||||||||||||||" + ChatColor.RED + "||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 76) bar = (ability + ChatColor.GREEN + " ||||||||||||||||||||||||||||||||||||||" + ChatColor.RED + "|||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 74) bar = (ability + ChatColor.GREEN + " |||||||||||||||||||||||||||||||||||||" + ChatColor.RED + "||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 72) bar = (ability + ChatColor.GREEN + " ||||||||||||||||||||||||||||||||||||" + ChatColor.RED + "|||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 70) bar = (ability + ChatColor.GREEN + " |||||||||||||||||||||||||||||||||||" + ChatColor.RED + "||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 68) bar = (ability + ChatColor.GREEN + " ||||||||||||||||||||||||||||||||||" + ChatColor.RED + "|||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 66) bar = (ability + ChatColor.GREEN + " |||||||||||||||||||||||||||||||||" + ChatColor.RED + "||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 64) bar = (ability + ChatColor.GREEN + " ||||||||||||||||||||||||||||||||" + ChatColor.RED + "|||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 62) bar = (ability + ChatColor.GREEN + " |||||||||||||||||||||||||||||||" + ChatColor.RED + "||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 60) bar = (ability + ChatColor.GREEN + " ||||||||||||||||||||||||||||||" + ChatColor.RED + "|||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 58) bar = (ability + ChatColor.GREEN + " |||||||||||||||||||||||||||||" + ChatColor.RED + "||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 56) bar = (ability + ChatColor.GREEN + " ||||||||||||||||||||||||||||" + ChatColor.RED + "|||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 54) bar = (ability + ChatColor.GREEN + " |||||||||||||||||||||||||||" + ChatColor.RED + "||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 52) bar = (ability + ChatColor.GREEN + " |||||||||||||||||||||||||" + ChatColor.RED + "||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 50) bar = (ability + ChatColor.GREEN + " ||||||||||||||||||||||||" + ChatColor.RED + "|||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 48) bar = (ability + ChatColor.GREEN + " |||||||||||||||||||||||" + ChatColor.RED + "||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 46) bar = (ability + ChatColor.GREEN + " ||||||||||||||||||||||" + ChatColor.RED + "|||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 44) bar = (ability + ChatColor.GREEN + " |||||||||||||||||||||" + ChatColor.RED + "||||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 42) bar = (ability + ChatColor.GREEN + " ||||||||||||||||||||" + ChatColor.RED + "|||||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 40) bar = (ability + ChatColor.GREEN + " |||||||||||||||||||" + ChatColor.RED + "||||||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 38) bar = (ability + ChatColor.GREEN + " ||||||||||||||||||" + ChatColor.RED + "|||||||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 36) bar = (ability + ChatColor.GREEN + " |||||||||||||||||" + ChatColor.RED + "||||||||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 34) bar = (ability + ChatColor.GREEN + " ||||||||||||||||" + ChatColor.RED + "|||||||||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 32) bar = (ability + ChatColor.GREEN + " |||||||||||||||" + ChatColor.RED + "||||||||||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 30) bar = (ability + ChatColor.GREEN + " ||||||||||||||" + ChatColor.RED + "|||||||||||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 28) bar = (ability + ChatColor.GREEN + " |||||||||||||" + ChatColor.RED + "||||||||||||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 26) bar = (ability + ChatColor.GREEN + " ||||||||||||" + ChatColor.RED + "|||||||||||||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 24) bar = (ability + ChatColor.GREEN + " |||||||||||" + ChatColor.RED + "||||||||||||||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 22) bar = (ability + ChatColor.GREEN + " ||||||||||" + ChatColor.RED + "|||||||||||||||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 20) bar = (ability + ChatColor.GREEN + " |||||||||" + ChatColor.RED + "||||||||||||||||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 18) bar = (ability + ChatColor.GREEN + " ||||||||" + ChatColor.RED + "|||||||||||||||||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 16) bar = (ability + ChatColor.GREEN + " |||||||" + ChatColor.RED + "||||||||||||||||||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 14) bar = (ability + ChatColor.GREEN + " ||||||" + ChatColor.RED + "|||||||||||||||||||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 12) bar = (ability + ChatColor.GREEN + " |||||" + ChatColor.RED + "||||||||||||||||||||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 10) bar = (ability + ChatColor.GREEN + " ||||" + ChatColor.RED + "|||||||||||||||||||||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 8) bar =  (ability + ChatColor.GREEN  + " |||" + ChatColor.RED + "||||||||||||||||||||||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 6) bar =  (ability + ChatColor.GREEN  + " ||" + ChatColor.RED + "|||||||||||||||||||||||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 4) bar =  (ability + ChatColor.GREEN  + " |" + ChatColor.RED + "||||||||||||||||||||||||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
-        else if (percentage >= 0) bar =  (ability + ChatColor.RED + " |||||||||||||||||||||||||||||||||||||||||||||||||| " + ChatColor.WHITE + rt2d(time));
+        for (int c = (int) green; c > 0; c--) {prog = prog + (ChatColor.GREEN + "|");}
+        for (int c = (int) red; c > 0; c--) {prog = prog + (ChatColor.RED + "|");}
+
+        bar = (ability + ChatColor.GREEN + " " + prog + " " + ChatColor.WHITE + rt2d(time));
 
         return bar;
     }

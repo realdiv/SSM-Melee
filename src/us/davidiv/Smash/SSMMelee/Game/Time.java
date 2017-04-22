@@ -19,7 +19,10 @@ public class Time implements Listener {
 
         if (e.getType() != UpdateType.DECI) {return;}
 
-        if (!timer) {return;}
+        if (!timer) {
+            currenttime = 0;
+            return;
+        }
 
         currenttime += 0.1;
 

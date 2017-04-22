@@ -1,6 +1,7 @@
 package us.davidiv.Smash.SSMMelee.Kit.Spider;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
@@ -32,8 +33,8 @@ public class Needler implements Listener {
     private HashMap<Player, Double> recharge = new HashMap<>();
     private HashSet<Arrow> arrows = new HashSet<Arrow>();
 
-    private double needlercooldown = 2.0;
-    private int arrowcount = 8;
+    private double needlercooldown = 1.8;
+    private int arrowcount = 20;
 
     @EventHandler
     public void cd(UpdateEvent e) {
@@ -41,6 +42,11 @@ public class Needler implements Listener {
         if (e.getType() != UpdateType.TICK) {return;}
 
         for (Player p : recharge.keySet()) {
+
+            if (getKit(p) != Kits.SPIDER) {
+                recharge.remove(p);
+                continue;
+            }
 
             if (p.getItemInHand().getType() == Material.IRON_SWORD)
                 cooldown(p, recharge.get(p), needlercooldown, "Stinger");
@@ -72,6 +78,7 @@ public class Needler implements Listener {
 
         recharge.put(p, needlercooldown);
         needler.put(p, arrowcount);
+        p.sendRawMessage(ChatColor.BLUE + "Initial click");
     }
 
     @EventHandler
@@ -99,6 +106,7 @@ public class Needler implements Listener {
             arrows.add(arrow);
             arrow.setShooter(p);
             p.getWorld().playSound(p.getLocation(), Sound.SPIDER_IDLE, 0.8f, 2f);
+            p.sendRawMessage("" + ((needler.get(p) - arrowcount) * -1));
 
         }
 

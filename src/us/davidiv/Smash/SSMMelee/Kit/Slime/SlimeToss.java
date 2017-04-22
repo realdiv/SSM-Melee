@@ -34,6 +34,8 @@ public class SlimeToss implements Listener {
     private HashMap<Entity, Player>tossEntity = new HashMap<>();
 
 
+
+
     //Initial right-click activation
 
     @EventHandler

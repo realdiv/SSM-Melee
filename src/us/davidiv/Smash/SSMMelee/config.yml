@@ -1,0 +1,17 @@
+Kits:
+  Spider:
+    Melee: 4
+    Stinger:
+      Damage: 3
+      Cooldown: 3.0
+      PoisonTime: 2.0
+    Web-Hook:
+      Damage: 16.0
+    Vortex:
+      Damage: 20.0
+      Knockback: 2.0
+  Slime:
+    Melee: 3
+    SlimeToss:
+      Damage:
+      Knockback:
