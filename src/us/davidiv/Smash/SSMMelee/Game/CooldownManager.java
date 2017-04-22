@@ -57,7 +57,10 @@ public class CooldownManager {
         double green = (percentage/2);
         double red = ((100 - percentage)/2);
 
-        for (int c = (int) green; c > 0; c--) {prog = prog + (ChatColor.GREEN + "|");}
+        for (int c = (int) green; c > 0; c--) {if (green == 50) {
+            prog = (ChatColor.GREEN + "|||||||||||||||||||||||||||||||||||||||||||||||||");
+            continue;
+        } prog = prog + (ChatColor.GREEN + "|");}
         for (int c = (int) red; c > 0; c--) {prog = prog + (ChatColor.RED + "|");}
 
         bar = (ability + ChatColor.GREEN + " " + prog + " " + ChatColor.WHITE + rt2d(time));

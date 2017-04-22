@@ -33,8 +33,8 @@ public class Needler implements Listener {
     private HashMap<Player, Double> recharge = new HashMap<>();
     private HashSet<Arrow> arrows = new HashSet<Arrow>();
 
-    private double needlercooldown = 1.8;
-    private int arrowcount = 20;
+    private double needlercooldown = 3.0;
+    private int arrowcount = 8;
 
     @EventHandler
     public void cd(UpdateEvent e) {
