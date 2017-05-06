@@ -22,6 +22,7 @@ import java.util.Iterator;
 
 import static us.davidiv.Smash.SSMMelee.Game.CooldownManager.cooldown;
 import static us.davidiv.Smash.SSMMelee.Game.CooldownManager.cooldownEnd;
+import static us.davidiv.Smash.SSMMelee.Game.DebugMode.ssmDebug;
 import static us.davidiv.Smash.SSMMelee.Game.Kit.getKit;
 
 public class Needler implements Listener {
@@ -33,8 +34,8 @@ public class Needler implements Listener {
     private HashMap<Player, Double> recharge = new HashMap<>();
     private HashSet<Arrow> arrows = new HashSet<Arrow>();
 
-    private double needlercooldown = 3.0;
-    private int arrowcount = 8;
+    private double needlercooldown = 2.0;
+    private int arrowcount = 7;
 
     @EventHandler
     public void cd(UpdateEvent e) {
@@ -78,7 +79,11 @@ public class Needler implements Listener {
 
         recharge.put(p, needlercooldown);
         needler.put(p, arrowcount);
-        p.sendRawMessage(ChatColor.BLUE + "Initial click");
+
+
+        if (!ssmDebug(p)) {return;}
+
+        p.sendRawMessage(ChatColor.WHITE + "[" + ChatColor.RED + "Debug" + ChatColor.WHITE + "] Initial click");
     }
 
     @EventHandler
@@ -94,22 +99,32 @@ public class Needler implements Listener {
                 continue;
             }
 
-            int count = needler.get(p)-1;
-
-            if(count<=0){
+            if(needler.get(p)<=0){
                 needler.remove(p);
                 continue;
             } else {
-                needler.put(p, count); }
+                needler.put(p, needler.get(p)-1); }
 
             Arrow arrow = p.getWorld().spawnArrow(p.getEyeLocation().add(p.getLocation().getDirection()), p.getLocation().getDirection(), 1.2f, 6);
             arrows.add(arrow);
             arrow.setShooter(p);
             p.getWorld().playSound(p.getLocation(), Sound.SPIDER_IDLE, 0.8f, 2f);
-            p.sendRawMessage("" + ((needler.get(p) - arrowcount) * -1));
 
+            if (!ssmDebug(p)) {continue;}
+
+
+            p.sendRawMessage(ChatColor.WHITE + "[" + ChatColor.RED + "Debug" + ChatColor.WHITE + "] " + ((needler.get(p) - arrowcount) * -1));
         }
 
+    }
+
+    @EventHandler
+    public void lightningNeedler(UpdateEvent e) {
+        if (e.getType() != UpdateType.TICK) {return;}
+
+        for (Arrow arrow : arrows) {
+            arrow.getWorld().strikeLightning(arrow.getLocation());
+        }
     }
 
     @EventHandler

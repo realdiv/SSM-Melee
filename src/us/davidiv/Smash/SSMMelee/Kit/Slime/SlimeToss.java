@@ -19,6 +19,7 @@ import java.util.HashMap;
 import static us.davidiv.Smash.SSMMelee.Game.GameScoreboard.updateSmashScoreboard;
 import static us.davidiv.Smash.SSMMelee.Game.Kit.getKit;
 import static us.davidiv.Smash.SSMMelee.Game.Knockback.getKnockback;
+import static us.davidiv.Smash.SSMMelee.Game.Knockback.playDamageAnimation;
 import static us.davidiv.Smash.SSMMelee.Game.Knockback.setKnockback;
 import static us.davidiv.Smash.SSMMelee.Kit.Slime.Overheat.getOverheat;
 
@@ -134,6 +135,7 @@ public class SlimeToss implements Listener {
 
                     entity.setVelocity(slime.getVelocity().multiply((getKnockback((Player) entity) / 100) * (slime.getSize()/2) + 1));
 
+                    playDamageAnimation(p);
                     updateSmashScoreboard();
 
                     tossEntity.remove(slime);

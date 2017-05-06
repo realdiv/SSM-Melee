@@ -17,8 +17,6 @@ public class Smash {
 
         if (e.getType() != UpdateType.SECOND) {return;}
 
-        if (!spawnChance()) {return;}
-
         if (getCurrentTime() < 600) {return;}
 
         if (!spawnChance()) {return;}

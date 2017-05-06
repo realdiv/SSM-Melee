@@ -12,9 +12,6 @@ import static us.davidiv.Smash.SSMMelee.Utils.UtilMath.rt2d;
 
 public class CooldownManager {
 
-    private HashMap<Player, Integer> player = new HashMap<>();
-    private HashMap<Integer, String> ability = new HashMap<>();
-    private HashMap<Integer, Double> time = new HashMap<>();
     private HashMap<Player, HashMap<String, Double>> cooldown = new HashMap<>();
     private Integer total;
 
@@ -29,7 +26,7 @@ public class CooldownManager {
     }
 
     public Double getTime(Player p, String ability) {
-        return time.get(player.get(p));
+        return cooldown.get(p).get(ability);
     }
 
 
@@ -38,7 +35,7 @@ public class CooldownManager {
     }
 
     public static void cooldownEnd(Player p, String ability) {
-        IChatBaseComponent icbc = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.GREEN + ability + " has recharged!" + "\"}");
+        IChatBaseComponent icbc = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.BOLD + ChatColor.GREEN + ability + " has recharged!" + "\"}");
         PacketPlayOutChat cooldown = new PacketPlayOutChat(icbc, (byte) 2);
         ((CraftPlayer) p).getHandle().playerConnection.sendPacket(cooldown);
     }

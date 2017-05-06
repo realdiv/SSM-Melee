@@ -10,5 +10,7 @@
     <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
     <orderEntry type="library" name="spigot-1.8.8" level="project" />
     <orderEntry type="library" name="LibsDisguises" level="project" />
+    <orderEntry type="library" name="BossBarAPI_v2.4.1" level="project" />
+    <orderEntry type="library" name="ProtocolLib (2)" level="project" />
   </component>
 </module>

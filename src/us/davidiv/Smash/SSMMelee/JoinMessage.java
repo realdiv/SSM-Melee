@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class JoinMessage implements Listener {
     public JoinMessage(SmashMelee plugin) {
@@ -14,7 +15,7 @@ public class JoinMessage implements Listener {
     }
 
         @EventHandler
-        public void JoinMessage (PlayerJoinEvent e){
+        public void onJoin(PlayerJoinEvent e) {
             Player p = e.getPlayer();
             String name = p.getName();
             if (name.equals("Davidiv")) {
@@ -23,6 +24,12 @@ public class JoinMessage implements Listener {
                 e.setJoinMessage(ChatColor.AQUA + "Welcome to Davidiv's test server, " + name + "!");
 
             }
+        }
+
+        @EventHandler
+        public void onLeave(PlayerQuitEvent e) {
+            String name = e.getPlayer().getName();
+            e.setQuitMessage(ChatColor.AQUA + "Bye bye, " + name + " ;-;");
         }
 
         @EventHandler

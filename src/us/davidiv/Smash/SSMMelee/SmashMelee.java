@@ -42,6 +42,7 @@ public class SmashMelee extends JavaPlugin {
         new Respawn(this);
         new Void(this);
         new Stun(this);
+        new Time(this);
 
         //Slime
         new SlimeToss(this);
@@ -62,6 +63,8 @@ public class SmashMelee extends JavaPlugin {
         getCommand("knockback").setExecutor(new KnockbackCommand(this));
         getCommand("kb").setExecutor(new KnockbackCommand(this));
         getCommand("debugcenter").setExecutor(new DebugSlime(this));
+        getCommand("ssmdebug").setExecutor(new DebugMode(this));
+        getCommand("timedebug").setExecutor(new DebugTime(this));
 
         setGame(false);
 
@@ -106,5 +109,6 @@ public class SmashMelee extends JavaPlugin {
             }
         }.runTaskTimer(this, 0L, 20L);
     }
+
 
 }
